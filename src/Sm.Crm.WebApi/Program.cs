@@ -1,9 +1,16 @@
+using Microsoft.AspNetCore.Hosting;
+using Sm.Crm.Application;
 using Sm.Crm.Infrastructure;
 using Sm.Crm.Infrastructure.Persistence;
+using Sm.Crm.Infrastructure.Persistence.Mapping;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddInfrastructureServices();
+builder.Services.AddApplicationServices();
+builder.Services.AddAutoMapper(typeof(Program), typeof(MappingProfile));
+
+//builder.Services.AddApplicationServices();
 //builder.Services.AddDbContext<ApplicationDbContext>();
 // Add services to the container.
 
