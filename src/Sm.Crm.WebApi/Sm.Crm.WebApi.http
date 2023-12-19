@@ -1,0 +1,6 @@
+@Sm.Crm.WebApi_HostAddress = http://localhost:5147
+
+GET {{Sm.Crm.WebApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
