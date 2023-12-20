@@ -21,15 +21,6 @@ namespace Sm.Crm.Application.Features.Queries.Customers.CustomerGetAll
         public int? RegionId { get; set; }
 
         public DateOnly? BirthDate { get; set; }
-
-        //public virtual Gender? Gender { get; set; }
-
-        //public virtual Region? Region { get; set; }
-
-        //public virtual StatusType? StatusType { get; set; }
-
-        //public virtual Title? Title { get; set; }
-
-        //public virtual User User { get; set; } = null!;
+              
     }
 }

@@ -14,8 +14,7 @@ namespace Sm.Crm.Application
         {
 
             services.AddMediatR(typeof(ServiceRegistration));
-
-            //services.AddHttpClient();
+           
 
         }
     }
