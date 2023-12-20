@@ -1,5 +1,6 @@
 ﻿
 
+using AutoMapper;
 using Sm.Crm.Application.DTOs.Customers;
 using Sm.Crm.Application.Repositories.Customers;
 using Sm.Crm.Application.Services.Customers;
@@ -11,11 +12,14 @@ namespace Sm.Crm.Infrastructure.Persistence.Services.Customers
     {
         readonly ICustomerQueryRepository _customerReadRepository;
         readonly ICustomerCommandRepository _customerWriteRepository;
+        readonly IMapper _mapper;
 
-        public CustomerService(ICustomerQueryRepository customerReadRepository, ICustomerCommandRepository customerWriteRepository)
+
+        public CustomerService(ICustomerQueryRepository customerReadRepository, ICustomerCommandRepository customerWriteRepository, IMapper mapper)
         {
             _customerReadRepository = customerReadRepository;
             _customerWriteRepository = customerWriteRepository;
+            _mapper = mapper;
         }
 
         public async Task<CreateCustomerResponseDto> CreateAsync(CreateCustomerDto createUser)
@@ -34,10 +38,11 @@ namespace Sm.Crm.Infrastructure.Persistence.Services.Customers
             };
         }
 
-        public  List<Customer> GetAllCustomers()
+        public  List<ReadCustomerDto> GetAllCustomers()
         {
-           
-            List<Customer> customers = _customerReadRepository.Table.ToList();
+            var customers = _mapper.Map<List<ReadCustomerDto>>( _customerReadRepository.GetAll(true));
+            int a = 5;
+            //List<ReadCustomerDto> customers =await _customerReadRepository.GetAll(true).ToList();
             //List<ReadCustomerDto> query = customers.ToList();
             //List<ReadCustomerDto> readCustomerDto = _customerReadRepository.GetAll(true).ToList();
             return customers;

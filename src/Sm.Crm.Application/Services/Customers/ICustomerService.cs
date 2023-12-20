@@ -7,7 +7,7 @@ namespace Sm.Crm.Application.Services.Customers
 {
     public interface ICustomerService
     {
-        List<Customer> GetAllCustomers();
+        List<ReadCustomerDto> GetAllCustomers();
         Task<CreateCustomerResponseDto> CreateAsync(CreateCustomerDto createUser);
     }
 }

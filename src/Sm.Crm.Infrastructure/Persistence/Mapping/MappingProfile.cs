@@ -9,6 +9,7 @@ namespace Sm.Crm.Infrastructure.Persistence.Mapping
         public MappingProfile()
         {
             CreateMap<ReadCustomerDto, Customer>().ReverseMap();            
+                   
         }
     }
 }

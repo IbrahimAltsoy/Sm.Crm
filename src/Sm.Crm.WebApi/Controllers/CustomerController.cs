@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Sm.Crm.Application.Features.Commands.Customers.CreateCustomer;
+using Sm.Crm.Application.Features.Queries.Customers.CustomerGetAll;
 using Sm.Crm.Application.Services.Customers;
 using Sm.Crm.Infrastructure.Persistence;
 
@@ -21,13 +22,18 @@ public class CustomerController : ControllerBase
         _mediator = mediator;
     }
 
-    [HttpGet]
-    public async Task<IActionResult> Get()
-    {        
-        var customers =  _customerService.GetAllCustomers();
-        int a = 5;
-        return Ok(customers);        
+    //[HttpGet]
+    //public async Task<IActionResult> Get()
+    //{        
+    //    var customers =  _customerService.GetAllCustomers();     
+    //    return Ok(customers);        
 
+    //}
+    [HttpGet]
+    public  async Task<IActionResult> GetAll([FromQuery] CustomerGetAllQeryRequest request)
+    {
+        List<CustomerGetAllQeryResponse> response =await _mediator.Send(request);
+        return Ok(response);
     }
     [HttpPost]
     public async Task<IActionResult> Create(CreateCustomerCommandRequest create)
