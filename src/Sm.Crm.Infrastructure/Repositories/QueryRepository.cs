@@ -1,12 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Sm.Crm.Application.Repositories;
 using Sm.Crm.Domain.Entities;
+using Sm.Crm.Domain.Entities.BaseEntity;
 using Sm.Crm.Infrastructure.Persistence;
 using System.Linq.Expressions;
 
 namespace Sm.Crm.Infrastructure.Repositories
 {
-    public class QueryRepository<T> : IRepository<T> where T : class, new()
+    public class QueryRepository<T> : IRepository<T> where T : BaseEntity, new()
     {
         private readonly ApplicationDbContext _context;
 
@@ -28,13 +29,13 @@ namespace Sm.Crm.Infrastructure.Repositories
         }
 
 
-        //public async Task<T> GetByIdAsync(string id, bool tracking)
-        //{
-        //    var query = Table.AsQueryable();
-        //    if (!tracking)
-        //        query = query.AsNoTracking();
-        //    return await query.FirstOrDefaultAsync(p => p.Id == Guid.Parse(id));
-        //}
+        public async Task<T> GetByIdAsync(int id, bool tracking)
+        {
+            var query = Table.AsQueryable();
+            if (!tracking)
+                query = query.AsNoTracking();
+            return await query.FirstOrDefaultAsync(p => p.Id == id);
+        }
 
 
         public async Task<T> GetSingleAsync(Expression<Func<T, bool>> method, bool tracking)

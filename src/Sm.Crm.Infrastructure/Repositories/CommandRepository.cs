@@ -4,10 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using Sm.Crm.Application.Repositories;
 using Sm.Crm.Domain.Entities;
 using Sm.Crm.Infrastructure.Persistence;
+using Sm.Crm.Domain.Entities.BaseEntity;
 
 namespace Sm.Crm.Infrastructure.Repositories
 {
-    public class CommandRepository<T> : ICommandRepository<T> where T : class, new()
+    public class CommandRepository<T> : ICommandRepository<T> where T : BaseEntity, new()
     {
         private readonly ApplicationDbContext _context;
 
@@ -40,13 +41,13 @@ namespace Sm.Crm.Infrastructure.Repositories
 
         }
 
-        //public async Task<bool> DeleteAsync(string id)
-        //{
-        //    T model = await Table.FirstOrDefaultAsync(data => data.Id == Guid.Parse(id));
-        //    return Delete(model);
+        public async Task<bool> DeleteAsync(int id)
+        {
+            T model = await Table.FirstOrDefaultAsync(data => data.Id == id);
+            return Delete(model);
 
 
-        //}
+        }
         public bool DeleteRange(List<T> entities)
         {
             Table.RemoveRange(entities);

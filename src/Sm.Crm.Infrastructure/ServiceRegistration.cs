@@ -15,8 +15,8 @@ namespace Sm.Crm.Infrastructure
         {
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configiration.ConnectingString));
 
-            services.AddScoped<ICustomerQueryRepository,CustomerReadRepository>();
-         services.AddScoped<ICustomerCommandRepository,CustomerWriteRepository>();    
+            services.AddScoped<ICustomerQueryRepository,CustomerQueryRepository>();
+         services.AddScoped<ICustomerCommandRepository,CustomerCommandRepository>();    
          services.AddScoped<ICustomerService, CustomerService>();
 
         }

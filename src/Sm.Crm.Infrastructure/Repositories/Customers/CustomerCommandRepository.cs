@@ -4,9 +4,9 @@ using Sm.Crm.Infrastructure.Persistence;
 
 namespace Sm.Crm.Infrastructure.Repositories.Customers
 {
-    public class CustomerWriteRepository : CommandRepository<Customer>, ICustomerCommandRepository
+    public class CustomerCommandRepository : CommandRepository<Customer>, ICustomerCommandRepository
     {
-        public CustomerWriteRepository(ApplicationDbContext context) : base(context)
+        public CustomerCommandRepository(ApplicationDbContext context) : base(context)
         {
         }
     }

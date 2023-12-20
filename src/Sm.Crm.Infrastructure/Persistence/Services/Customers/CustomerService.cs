@@ -37,15 +37,38 @@ namespace Sm.Crm.Infrastructure.Persistence.Services.Customers
                 Message = "Kayıt başarılı bir şekilde gerçekleşti"
             };
         }
+              
 
         public  List<ReadCustomerDto> GetAllCustomers()
         {
             var customers = _mapper.Map<List<ReadCustomerDto>>( _customerReadRepository.GetAll(true));
-            int a = 5;
-            //List<ReadCustomerDto> customers =await _customerReadRepository.GetAll(true).ToList();
-            //List<ReadCustomerDto> query = customers.ToList();
-            //List<ReadCustomerDto> readCustomerDto = _customerReadRepository.GetAll(true).ToList();
+          
+            
             return customers;
+        }
+
+        public async System.Threading.Tasks.Task CustomerUpdateAsync(CustomerUpdateDto customerUpdate)
+        {
+            Customer? customer = await _customerReadRepository.GetByIdAsync(customerUpdate.Id,true);
+            if (customer!=null)
+            {
+                customer.UserId = customerUpdate.UserId;
+                customer.IdentityNumber = customerUpdate.IdentityNumber;
+                await _customerWriteRepository.SaveChanges();
+
+            }
+            
+            
+        }
+
+        public async System.Threading.Tasks.Task CustomerDelete(int id)
+        {
+            Customer? customer = await _customerReadRepository.GetByIdAsync(id,true);
+            if (customer!=null)
+            {
+                  _customerWriteRepository.Delete(customer);
+                await _customerWriteRepository.SaveChanges();
+            }
         }
     }
 }
