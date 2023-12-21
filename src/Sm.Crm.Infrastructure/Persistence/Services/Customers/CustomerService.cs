@@ -1,10 +1,11 @@
-﻿
-
-using AutoMapper;
+﻿using AutoMapper;
 using Sm.Crm.Application.DTOs.Customers;
 using Sm.Crm.Application.Repositories.Customers;
 using Sm.Crm.Application.Services.Customers;
+using Sm.Crm.Application.Validator.Customer;
 using Sm.Crm.Domain.Entities.BaseEntity;
+using System.Web.Mvc;
+
 
 namespace Sm.Crm.Infrastructure.Persistence.Services.Customers
 {
@@ -21,10 +22,10 @@ namespace Sm.Crm.Infrastructure.Persistence.Services.Customers
             _customerWriteRepository = customerWriteRepository;
             _mapper = mapper;
         }
-
+       
         public async Task<CreateCustomerResponseDto> CreateAsync(CreateCustomerDto createUser)
         {
-
+           
             await _customerWriteRepository.AddAsync(new Customer()
             {
                 UserId = createUser.UserId,

@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Sm.Crm.Domain.Entities;
 using Sm.Crm.Domain.Entities.BaseEntity;
 namespace Sm.Crm.Infrastructure.Persistence;
 
@@ -27,7 +26,6 @@ public class ApplicationDbContext : DbContext/*, IApplicationDbContext*/
     public DbSet<RolePermission> RolePermissions { get; set; }
     public DbSet<Sale> Sales { get; set; }
     public DbSet<Setting> Settings { get; set; }
-    //public DbSet<Sf2CrmContext> Sf2CrmContexts { get; set; }
     public DbSet<StatusType> StatusTypes { get; set; }
     public DbSet<Domain.Entities.BaseEntity.Task> Tasks { get; set; }
     public DbSet<Domain.Entities.BaseEntity.TaskStatus> TaskStatuses { get; set; }

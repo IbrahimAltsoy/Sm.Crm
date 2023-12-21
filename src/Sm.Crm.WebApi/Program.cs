@@ -1,20 +1,34 @@
 using Microsoft.AspNetCore.Hosting;
 using Sm.Crm.Application;
+using Sm.Crm.Application.DTOs.Customers;
 using Sm.Crm.Infrastructure;
+using Sm.Crm.Infrastructure.Filters;
 using Sm.Crm.Infrastructure.Persistence;
 using Sm.Crm.Infrastructure.Persistence.Mapping;
+using FluentValidation.AspNetCore;
+using FluentValidation;
+using Microsoft.AspNetCore.Mvc.Filters;
+using Sm.Crm.Application.Validator.Customer;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddControllers();
+
+//builder.Services.AddScoped<IValidator<CreateCustomerDto>, CreateCustomerValidator>();
+
+builder.Services.AddScoped<IAsyncActionFilter, ValidationFilter>();
 builder.Services.AddInfrastructureServices();
 builder.Services.AddApplicationServices();
 builder.Services.AddAutoMapper(typeof(Program), typeof(MappingProfile));
+
+builder.Services.AddControllers(options => options.Filters.Add<ValidationFilter>())
+    .AddFluentValidation(configration => configration.RegisterValidatorsFromAssemblyContaining<CreateCustomerValidator>())
+    .ConfigureApiBehaviorOptions(options => options.SuppressModelStateInvalidFilter = true);
 
 //builder.Services.AddApplicationServices();
 //builder.Services.AddDbContext<ApplicationDbContext>();
 // Add services to the container.
 
-builder.Services.AddControllers();
+//builder.Services.AddControllers();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

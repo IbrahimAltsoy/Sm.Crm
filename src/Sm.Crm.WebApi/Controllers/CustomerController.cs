@@ -1,12 +1,15 @@
-﻿using MediatR;
+﻿using FluentValidation;
+using MediatR;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using Sm.Crm.Application.DTOs.Customers;
 using Sm.Crm.Application.Features.Commands.Customers.CreateCustomer;
 using Sm.Crm.Application.Features.Commands.Customers.CustomerDelete;
 using Sm.Crm.Application.Features.Commands.Customers.UpdateCustomer;
 using Sm.Crm.Application.Features.Queries.Customers.CustomerGetAll;
 using Sm.Crm.Application.Services.Customers;
 using Sm.Crm.Infrastructure.Persistence;
+using System.Net;
 
 namespace Sm.Crm.WebApi.Controllers;
 
@@ -14,35 +17,42 @@ namespace Sm.Crm.WebApi.Controllers;
 [Route("api/[controller]")]
 public class CustomerController : ControllerBase
 {
-   readonly ICustomerService _customerService;
+
     readonly IMediator _mediator;
+    readonly ICustomerService _customerService;
 
+    
 
-    public CustomerController(ICustomerService customerService, IMediator mediator)
+    public CustomerController(IMediator mediator, ICustomerService customerService)
     {
-        _customerService = customerService;
+
         _mediator = mediator;
+        _customerService = customerService;
+
     }
 
-    //[HttpGet]
-    //public async Task<IActionResult> Get()
-    //{        
-    //    var customers =  _customerService.GetAllCustomers();     
-    //    return Ok(customers);        
 
-    //}
     [HttpGet]
-    public  async Task<IActionResult> GetAll([FromQuery] CustomerGetAllQeryRequest request)
+    public async Task<IActionResult> GetAll([FromQuery] CustomerGetAllQeryRequest request)
     {
-        List<CustomerGetAllQeryResponse> response =await _mediator.Send(request);
+        List<CustomerGetAllQeryResponse> response = await _mediator.Send(request);
         return Ok(response);
     }
     [HttpPost]
     public async Task<IActionResult> Create(CreateCustomerCommandRequest create)
     {
-        CreateCustomerCommandResponse response =await _mediator.Send(create);
-        return Ok(response);
+        if (!ModelState.IsValid)
+        {
+            return BadRequest();
+        }
+        else
+        {
+            CreateCustomerCommandResponse response = await _mediator.Send(create);
+            return StatusCode((int)HttpStatusCode.Created);
+        }
+
     }
+
     [HttpPut]
     public async Task<IActionResult> Update(CustomerUpdateCommandRequest request)
     {
