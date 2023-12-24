@@ -7,8 +7,11 @@ using Sm.Crm.Application.Features.Commands.Customers.CreateCustomer;
 using Sm.Crm.Application.Features.Commands.Customers.CustomerDelete;
 using Sm.Crm.Application.Features.Commands.Customers.UpdateCustomer;
 using Sm.Crm.Application.Features.Queries.Customers.CustomerGetAll;
+using Sm.Crm.Application.Repositories.Customers;
 using Sm.Crm.Application.Services.Customers;
+using Sm.Crm.Domain.Entities;
 using Sm.Crm.Infrastructure.Persistence;
+using Sm.Crm.Infrastructure.Repositories.Customers;
 using System.Net;
 
 namespace Sm.Crm.WebApi.Controllers;
@@ -20,23 +23,32 @@ public class CustomerController : ControllerBase
 
     readonly IMediator _mediator;
     readonly ICustomerService _customerService;
-
+    readonly ICustomerQueryRepository _customerQueryRepository;
     
 
-    public CustomerController(IMediator mediator, ICustomerService customerService)
+
+
+    public CustomerController(IMediator mediator, ICustomerService customerService, ICustomerQueryRepository customerQueryRepository)
     {
 
         _mediator = mediator;
         _customerService = customerService;
+        _customerQueryRepository = customerQueryRepository;
 
     }
-
+    //[HttpGet]
+    //public async Task<IActionResult> GetAll()
+    //{
+    //    List<Customer> customers = await _customerQueryRepository.GetAll();
+    //    int a = 5;
+    //    return Ok(customers.Take(5).ToList());
+    //}
 
     [HttpGet]
     public async Task<IActionResult> GetAll([FromQuery] CustomerGetAllQeryRequest request)
     {
         List<CustomerGetAllQeryResponse> response = await _mediator.Send(request);
-        return Ok(response);
+        return Ok(response.Take(5).ToList());
     }
     [HttpPost]
     public async Task<IActionResult> Create(CreateCustomerCommandRequest create)

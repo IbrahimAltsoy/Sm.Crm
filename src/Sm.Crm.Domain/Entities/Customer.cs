@@ -1,39 +1,27 @@
-﻿using Sm.Crm.Domain.Entities.BaseEntity;
-using System;
-using System.Collections.Generic;
+﻿using Sm.Crm.Domain.Common;
+using Sm.Crm.Domain.Entities.LST;
+using Sm.Crm.Domain.Enums;
 
+namespace Sm.Crm.Domain.Entities;
 
-namespace Sm.Crm.Domain.Entities.BaseEntity;
-
-public partial class Customer : BaseEntity
+public class Customer : BaseAuditableEntity<long>
 {
-    //public int Id { get; set; }
-
-    public int UserId { get; set; }
-
-    public string IdentityNumber { get; set; } = null!;
-
-    public int? GenderId { get; set; }
-
-    public int? StatusTypeId { get; set; }
-
-    public short? CustomerType { get; set; }
-
-    public int? TitleId { get; set; }
-
+    public string? IdentityNumber { get; set; }
+    public CustomerTypeEnum? CustomerType { get; set; }
     public string? CompanyName { get; set; }
-
-    public int? RegionId { get; set; }
-
     public DateOnly? BirthDate { get; set; }
 
-    public virtual Gender? Gender { get; set; }
+    public int? UserId { get; set; }
+    public GenderEnum? Gender { get; set; }
+    public int? StatusTypeId { get; set; }
+    public int? TitleId { get; set; }
+    public int? TerritoryId { get; set; }
 
-    public virtual Region? Region { get; set; }
+    #region Navigation Properties
 
-    public virtual StatusType? StatusType { get; set; }
+    public User? UserFk { get; set; }
+    public StatusType? StatusTypeFk { get; set; }
+    public Territory? TerritoryFk { get; set; }
 
-    public virtual Title? Title { get; set; }
-
-    public virtual User User { get; set; } = null!;
+    #endregion
 }

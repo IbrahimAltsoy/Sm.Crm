@@ -1,19 +1,18 @@
-﻿using Sm.Crm.Domain.Entities;
-using Sm.Crm.Domain.Entities.BaseEntity;
+﻿using Sm.Crm.Domain.Common;
 
 namespace Sm.Crm.Application.Repositories
 {
-    public interface ICommandRepository<T> : IRepository<T> where T : BaseEntity, new()
+    public interface ICommandRepository<TEntity, TKey> : IRepository<TEntity, TKey>
+    where TEntity : class, IEntity<TKey>
     {
-        Task<bool> AddAsync(T entity);
-        Task<bool> AddRangeAsync(List<T> entity);
+        Task<List<TEntity>> GetAll(int page = 1);
+        Task<TEntity?> GetById(TKey id);
+        Task Create(TEntity entity);
+        Task Update(TEntity entity);
+        Task Delete(TEntity entity);
+        Task DeleteById(TKey id);
+        Task SoftDelete(TEntity entity);
 
-        bool Update(T entity);
 
-        bool Delete(T entity);
-        Task<bool> DeleteAsync(int id);
-        bool DeleteRange(List<T> entities);
-
-        Task<int> SaveChanges();
     }
 }

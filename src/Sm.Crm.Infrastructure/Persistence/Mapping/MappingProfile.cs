@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Sm.Crm.Application.DTOs.Customers;
-using Sm.Crm.Domain.Entities.BaseEntity;
+using Sm.Crm.Domain.Entities;
 
 namespace Sm.Crm.Infrastructure.Persistence.Mapping
 {

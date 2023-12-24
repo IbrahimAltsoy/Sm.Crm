@@ -9,14 +9,16 @@ using FluentValidation.AspNetCore;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Sm.Crm.Application.Validator.Customer;
+using Sm.Crm.WebApi;
 
 var builder = WebApplication.CreateBuilder(args);
 
 //builder.Services.AddScoped<IValidator<CreateCustomerDto>, CreateCustomerValidator>();
 
 builder.Services.AddScoped<IAsyncActionFilter, ValidationFilter>();
-builder.Services.AddInfrastructureServices();
+builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.AddApplicationServices();
+builder.Services.AddWebApiServices();
 builder.Services.AddAutoMapper(typeof(Program), typeof(MappingProfile));
 
 builder.Services.AddControllers(options => options.Filters.Add<ValidationFilter>())
@@ -60,6 +62,7 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    await app.InitializeDb();
 }
 
 app.UseHttpsRedirection();

@@ -1,26 +1,21 @@
-﻿using Sm.Crm.Domain.Entities.BaseEntity;
+﻿
+using Sm.Crm.Domain.Enums;
 
 namespace Sm.Crm.Application.Features.Queries.Customers.CustomerGetAll
 {
     public class CustomerGetAllQeryResponse
     {
-        public int UserId { get; set; }
-
-        public string IdentityNumber { get; set; } = null!;
-
-        public int? GenderId { get; set; }
-
-        public int? StatusTypeId { get; set; }
-
-        public short? CustomerType { get; set; }
-
-        public int? TitleId { get; set; }
-
+        public string? IdentityNumber { get; set; }
+        public CustomerTypeEnum? CustomerType { get; set; }
         public string? CompanyName { get; set; }
-
-        public int? RegionId { get; set; }
-
         public DateOnly? BirthDate { get; set; }
-              
+
+        public int? UserId { get; set; }
+        public GenderEnum? Gender { get; set; }
+        public int? StatusTypeId { get; set; }
+        public int? TitleId { get; set; }
+        public int? TerritoryId { get; set; }
+        
+
     }
 }

@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Sm.Crm.Domain.Common;
 
-namespace Sm.Crm.Domain.Entities.BaseEntity;
+namespace Sm.Crm.Domain.Entities;
 
-public partial class UserEmail:BaseEntity
+public class UserEmail : BaseEntity
 {
-    //public int Id { get; set; }
-
     public int? UserId { get; set; }
-
     public string? EmailAddress { get; set; }
-
     public short? EmailType { get; set; }
 
-    public virtual User? User { get; set; }
+    // Navigation Properties
+    //public User? UserFk { get; set; }
 }

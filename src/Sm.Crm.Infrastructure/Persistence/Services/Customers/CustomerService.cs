@@ -2,73 +2,84 @@
 using Sm.Crm.Application.DTOs.Customers;
 using Sm.Crm.Application.Repositories.Customers;
 using Sm.Crm.Application.Services.Customers;
-using Sm.Crm.Application.Validator.Customer;
-using Sm.Crm.Domain.Entities.BaseEntity;
-using System.Web.Mvc;
+using Sm.Crm.Domain.Entities;
+using Sm.Crm.Infrastructure.Repositories.Customers;
 
 
 namespace Sm.Crm.Infrastructure.Persistence.Services.Customers
 {
     public class CustomerService : ICustomerService
     {
-        readonly ICustomerQueryRepository _customerReadRepository;
-        readonly ICustomerCommandRepository _customerWriteRepository;
+        readonly ICustomerQueryRepository _customerQueryRepository;
+        readonly ICustomerCommandRepository _customerCommandRepository;
         readonly IMapper _mapper;
 
 
-        public CustomerService(ICustomerQueryRepository customerReadRepository, ICustomerCommandRepository customerWriteRepository, IMapper mapper)
+        public CustomerService(ICustomerQueryRepository customerQueryRepository, ICustomerCommandRepository customerCommandRepository, IMapper mapper)
         {
-            _customerReadRepository = customerReadRepository;
-            _customerWriteRepository = customerWriteRepository;
+            _customerQueryRepository = customerQueryRepository;
+            _customerCommandRepository = customerCommandRepository;
             _mapper = mapper;
         }
-       
+
         public async Task<CreateCustomerResponseDto> CreateAsync(CreateCustomerDto createUser)
         {
-           
-            await _customerWriteRepository.AddAsync(new Customer()
+
+            await _customerCommandRepository.Create(new Customer()
             {
-                UserId = createUser.UserId,
-                IdentityNumber = createUser.IdentityNumber
+                CompanyName = createUser.CompanyName,
+                IdentityNumber = createUser.IdentityNumber,
+                CreatedAt = DateTime.UtcNow,
+                DeletedAt = DateTime.UtcNow,
+
             });
-            await _customerWriteRepository.SaveChanges();
+            
             return new()
             {
-                
+
                 Message = "Kayıt başarılı bir şekilde gerçekleşti"
             };
         }
-              
 
-        public  List<ReadCustomerDto> GetAllCustomers()
+
+        public async Task<List<ReadCustomerDto>> GetAllCustomers()
         {
-            var customers = _mapper.Map<List<ReadCustomerDto>>( _customerReadRepository.GetAll(true));
-          
-            
-            return customers;
+            List<Customer> customers = await _customerQueryRepository.GetAll();
+            List<ReadCustomerDto> result = new List<ReadCustomerDto>();
+            foreach (var customer in customers)
+            {
+                result.Add(_mapper.Map<ReadCustomerDto>(customer));
+            }
+            return result;
+
+            ////var customers = _mapper.Map<List<ReadCustomerDto>>(_customerReadRepository.GetAll(true));
+            //var customers = _mapper.Map<List<ReadCustomerDto>>(_customerQueryRepository.GetAll());
+
+            //int a = 5;
+            //return customers;
         }
 
-        public async System.Threading.Tasks.Task CustomerUpdateAsync(CustomerUpdateDto customerUpdate)
+        public async Task CustomerUpdateAsync(CustomerUpdateDto customerUpdate)
         {
-            Customer? customer = await _customerReadRepository.GetByIdAsync(customerUpdate.Id,true);
-            if (customer!=null)
+            Customer? customer = await _customerQueryRepository.GetById(customerUpdate.Id);
+            if (customer != null)
             {
-                customer.UserId = customerUpdate.UserId;
+                customer.CompanyName = customerUpdate.CompanyName;
                 customer.IdentityNumber = customerUpdate.IdentityNumber;
-                await _customerWriteRepository.SaveChanges();
+                await _customerCommandRepository.Update(customer);
 
             }
-            
-            
+
+
         }
 
-        public async System.Threading.Tasks.Task CustomerDelete(int id)
+        public async Task CustomerDelete(int id)
         {
-            Customer? customer = await _customerReadRepository.GetByIdAsync(id,true);
-            if (customer!=null)
+            Customer? customer = await _customerQueryRepository.GetById(id);
+            if (customer != null)
             {
-                  _customerWriteRepository.Delete(customer);
-                await _customerWriteRepository.SaveChanges();
+                await _customerCommandRepository.Delete(customer);
+                // await _customerWriteRepository.SaveChanges();
             }
         }
     }

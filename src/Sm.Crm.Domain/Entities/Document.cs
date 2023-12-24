@@ -1,20 +1,11 @@
-﻿
+﻿using Sm.Crm.Domain.Common;
 
-namespace Sm.Crm.Domain.Entities.BaseEntity;
-
-public partial class Document:BaseEntity
+namespace Sm.Crm.Domain.Entities;
+public class Document : BaseAuditableEntity
 {
-    //public int Id { get; set; }
+	public string DocumentFileName { get; set; }
 
-    public int UserId { get; set; }
-
-    public int? RequestId { get; set; }
-
-    public string DocumentFileName { get; set; } = null!;
-
-    public int DocumentTypeId { get; set; }
-
-    public virtual DocumentType DocumentType { get; set; } = null!;
-
-    public virtual User User { get; set; } = null!;
+	public int UserId { get; set; }
+	public int RequestId { get; set; }
+	public int DocumentTypeId { get; set; }
 }

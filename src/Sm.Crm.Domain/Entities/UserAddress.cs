@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Sm.Crm.Domain.Common;
 
-namespace Sm.Crm.Domain.Entities.BaseEntity;
+namespace Sm.Crm.Domain.Entities;
 
-public partial class UserAddress:BaseEntity
+public class UserAddress : BaseEntity
 {
-    //public int Id { get; set; }
-
     public int UserId { get; set; }
 
-    public string Description { get; set; } = null!;
+    public string Description { get; set; } = string.Empty;
 
     public short AddressType { get; set; }
 
-    public virtual User User { get; set; } = null!;
+    //public virtual User User { get; set; } = null!;
 }

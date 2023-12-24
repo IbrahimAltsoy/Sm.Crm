@@ -1,70 +1,70 @@
-﻿
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Microsoft.EntityFrameworkCore;
-using Sm.Crm.Application.Repositories;
-using Sm.Crm.Domain.Entities;
+﻿using Microsoft.EntityFrameworkCore;
 using Sm.Crm.Infrastructure.Persistence;
-using Sm.Crm.Domain.Entities.BaseEntity;
+using Sm.Crm.Domain.Common;
+using Sm.Crm.Application.Repositories;
 
 namespace Sm.Crm.Infrastructure.Repositories
 {
-    public class CommandRepository<T> : ICommandRepository<T> where T : BaseEntity, new()
+    public class CommandRepository<TEntity, TKey> : IRepository<TEntity, TKey>
+    where TEntity : class, IEntity<TKey>
     {
         private readonly ApplicationDbContext _context;
+        private readonly DbSet<TEntity> _table;
 
         public CommandRepository(ApplicationDbContext context)
         {
             _context = context;
+            _table = _context.Set<TEntity>();
         }
 
-        public DbSet<T> Table => _context.Set<T>();
-
-        public async Task<bool> AddAsync(T entity)
+        public async Task<List<TEntity>> GetAll(int page = 1)
         {
-            EntityEntry<T> entityEntry = await Table.AddAsync(entity);
-            return entityEntry.State == EntityState.Added;
+            return await _table.ToListAsync();
         }
 
-
-        public async Task<bool> AddRangeAsync(List<T> entity)
+        public async Task<TEntity?> GetById(TKey id)
         {
-            await Table.AddRangeAsync(entity);
-            return true;
-
+            return await _table.FindAsync(id);
         }
 
-
-        public bool Delete(T entity)
+        public async Task Create(TEntity entity)
         {
-            EntityEntry<T> entityEntry = Table.Remove(entity);
-            return entityEntry.State == EntityState.Deleted;
-
+            _table.Add(entity);
+            await _context.SaveChangesAsync();
+            return;
         }
 
-        public async Task<bool> DeleteAsync(int id)
+        public async Task Update(TEntity entity)
         {
-            T model = await Table.FirstOrDefaultAsync(data => data.Id == id);
-            return Delete(model);
-
-
+            _table.Update(entity);
+            await _context.SaveChangesAsync();
+            return;
         }
-        public bool DeleteRange(List<T> entities)
+
+        public async Task Delete(TEntity entity)
         {
-            Table.RemoveRange(entities);
-            return true;
+            _table.Remove(entity);
+            await _context.SaveChangesAsync();
+            return;
         }
 
-        public bool Update(T entity)
+
+        public async Task DeleteById(TKey id)
         {
-            EntityEntry<T> entityEntry = Table.Update(entity);
-            return entityEntry.State == EntityState.Modified;
+            var entity = await _table.FindAsync(id);
+            if (entity != null) await Delete(entity);
         }
-        public async Task<int> SaveChanges()
+
+        public async Task SoftDelete(TEntity entity)
         {
+            var entityItem = await GetById(entity.Id);
+            if (entity is not BaseAuditableEntity) return;
+            if (entityItem is null) return;
 
-            return await _context.SaveChangesAsync();
+            (entityItem as BaseAuditableEntity).DeletedAt = DateTime.UtcNow;
+
+            _table.Update(entity);
+            await _context.SaveChangesAsync();
         }
-
-
     }
 }

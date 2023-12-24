@@ -18,8 +18,10 @@ namespace Sm.Crm.Application.Features.Commands.Customers.CreateCustomer
         {
             await _customerService.CreateAsync(new()
             {
+                CompanyName = request.CompanyName,
                 IdentityNumber = request.IdentityNumber,
-                UserId = request.UserId
+                CreatedAt = request.CreatedAt,
+                DeletedAt = request.DeletedAt,
             });
             return new();
             

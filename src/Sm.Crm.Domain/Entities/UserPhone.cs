@@ -1,17 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Sm.Crm.Domain.Common;
 
-namespace Sm.Crm.Domain.Entities.BaseEntity;
+namespace Sm.Crm.Domain.Entities;
 
-public partial class UserPhone:BaseEntity
+public class UserPhone : BaseEntity
 {
-    //public int Id { get; set; }
-
     public int UserId { get; set; }
 
-    public string PhoneNumber { get; set; } = null!;
+    public string PhoneNumber { get; set; }
 
     public short PhoneType { get; set; }
 
-    public virtual User User { get; set; } = null!;
+    // Navigation Properties
+    //public virtual User User { get; set; }
 }

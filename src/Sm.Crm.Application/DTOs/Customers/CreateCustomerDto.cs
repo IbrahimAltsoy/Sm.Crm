@@ -1,12 +1,14 @@
-﻿using Sm.Crm.Domain.Entities.BaseEntity;
+﻿
 
 namespace Sm.Crm.Application.DTOs.Customers
 {
     public class CreateCustomerDto
     {
-        public int UserId { get; set; }
+        public string CompanyName { get; set; }
 
-        public string IdentityNumber { get; set; } = null!;
-     
+        public string IdentityNumber { get; set; }
+        public DateTimeOffset CreatedAt { get; set; }
+        public DateTimeOffset DeletedAt { get; set; }
+
     }
 }

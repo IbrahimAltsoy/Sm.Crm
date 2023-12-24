@@ -17,7 +17,7 @@ namespace Sm.Crm.Application.Features.Commands.Customers.UpdateCustomer
             await _customerService.CustomerUpdateAsync(new()
             {
                 Id = request.Id,
-                UserId = request.UserId,
+                CompanyName = request.CompanyName,
                 IdentityNumber = request.IdentityNumber
             });
             return new();
@@ -25,10 +25,3 @@ namespace Sm.Crm.Application.Features.Commands.Customers.UpdateCustomer
         }
     }
 }
-//await _basketService.UpdateQuantityAsync(new()
-//{
-//    BasketItemId = request.BasketItemId,
-//    Quantity = request.Quantity
-//});
-
-//return new();

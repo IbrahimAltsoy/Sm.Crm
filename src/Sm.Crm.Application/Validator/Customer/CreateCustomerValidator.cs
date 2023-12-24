@@ -8,20 +8,24 @@ namespace Sm.Crm.Application.Validator.Customer
     {
         public CreateCustomerValidator()
         {
-            RuleFor(p => p.UserId)
+            RuleFor(p => p.CompanyName)
                 .NotEmpty()
-                    .WithMessage("Lütfen UserId giriniz")
-                .Must(c => c > 0)
-                    .WithMessage("UserId alanı 0 dan büyük olmalıdır.");
+                 .NotNull()
+                     .WithMessage("Lutfen şirket ismi giriniz")
+                 .MaximumLength(250)
+                     .WithMessage("Şirket ismi en fazla {MaxLength} karakter olmalidir.")
+                 .MinimumLength(3)
+                     .WithMessage("Şirket en az {MinLength} karakter olmalidir.");
+
 
             RuleFor(p => p.IdentityNumber)
                  .NotEmpty()
                  .NotNull()
-                     .WithMessage("Lutfen urun ismi giriniz")
+                     .WithMessage("Lutfen Identy numarasını giriniz")
                  .MaximumLength(15)
-                     .WithMessage("Ürunu en fazla {MaxLength} karakter olmalidir.")
+                     .WithMessage("Identy numarası en fazla {MaxLength} karakter olmalidir.")
                  .MinimumLength(2)
-                     .WithMessage("Ürunu en az {MinLength} karakter olmalidir.");
+                     .WithMessage("Identy numarası en az {MinLength} karakter olmalidir.");
         }
     }
 }

@@ -1,22 +1,17 @@
-﻿
+﻿using Sm.Crm.Domain.Common;
 
-namespace Sm.Crm.Domain.Entities.BaseEntity;
+namespace Sm.Crm.Domain.Entities;
 
-public partial class Sale:BaseEntity
+public class Sale : BaseEntity
 {
-    //public int Id { get; set; }
-
     public int RequestId { get; set; }
-
     public int EmployeeUserId { get; set; }
-
-    //public DateTime SaleDate { get; set; }
-
+    public DateTime SaleDate { get; set; }
     public decimal SaleAmount { get; set; }
+    public string Description { get; set; }
 
-    public string Description { get; set; } = null!;
+    // Navigation Properties
+    public Request RequestFk { get; set; }
 
-    public virtual User EmployeeUser { get; set; } = null!;
-
-    public virtual Request Request { get; set; } = null!;
+    public Employee EmployeeFk { get; set; }
 }

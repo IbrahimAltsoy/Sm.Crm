@@ -1,14 +1,11 @@
-﻿using Sm.Crm.Domain.Entities;
-using Sm.Crm.Domain.Entities.BaseEntity;
-using System.Linq.Expressions;
+﻿using Sm.Crm.Domain.Common;
 
 namespace Sm.Crm.Application.Repositories
 {
-    public interface IQueryRepository<T> : IRepository<T> where T : BaseEntity, new()
+    public interface IQueryRepository<TEntity, TKey> : IRepository<TEntity, TKey>
+    where TEntity : class, IEntity<TKey>
     {
-        IQueryable<T> GetAll(bool tracking);
-        IQueryable<T> GetWhere(Expression<Func<T, bool>> method, bool tracking);
-        Task<T> GetSingleAsync(Expression<Func<T, bool>> method, bool tracking);
-        Task<T> GetByIdAsync(int id, bool tracking);
+        Task<List<TEntity>> GetAll(int page = 1);
+        Task<TEntity?> GetById(TKey id);
     }
 }
