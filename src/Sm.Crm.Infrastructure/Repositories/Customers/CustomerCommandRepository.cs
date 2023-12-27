@@ -9,5 +9,7 @@ namespace Sm.Crm.Infrastructure.Repositories.Customers
         public CustomerCommandRepository(ApplicationDbContext context) : base(context)
         {
         }
+
+        
     }
 }

@@ -17,7 +17,7 @@ namespace Sm.Crm.Infrastructure.Repositories
             _table = _context.Set<TEntity>();
         }
 
-        public async Task<List<TEntity>> GetAll(int page = 1)
+        public async Task<List<TEntity>> GetAll()
         {
             return await _table.ToListAsync();
         }

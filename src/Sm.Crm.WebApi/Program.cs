@@ -18,8 +18,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddScoped<IAsyncActionFilter, ValidationFilter>();
 builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.AddApplicationServices();
+builder.Services.AddHttpClient();
 builder.Services.AddWebApiServices();
+
 builder.Services.AddAutoMapper(typeof(Program), typeof(MappingProfile));
+
+builder.Services.AddCors(options => options.AddDefaultPolicy(policy =>
+policy.WithOrigins("http://localhost:4200", "https://localhost:4200").AllowAnyHeader().AllowAnyMethod().AllowCredentials()));
 
 builder.Services.AddControllers(options => options.Filters.Add<ValidationFilter>())
     .AddFluentValidation(configration => configration.RegisterValidatorsFromAssemblyContaining<CreateCustomerValidator>())
@@ -64,6 +69,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
     await app.InitializeDb();
 }
+app.UseCors();
 
 app.UseHttpsRedirection();
 

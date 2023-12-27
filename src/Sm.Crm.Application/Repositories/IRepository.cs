@@ -2,7 +2,7 @@
 {
     public interface IRepository<TEntity, TKey>
     {
-        Task<List<TEntity>> GetAll(int page = 1);
+        Task<List<TEntity>> GetAll();
 
         Task<TEntity?> GetById(TKey id);
 

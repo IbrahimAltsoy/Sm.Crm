@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Sm.Crm.Application.Repositories;
 using Sm.Crm.Domain.Common;
 using Sm.Crm.Infrastructure.Persistence;
@@ -17,10 +18,11 @@ namespace Sm.Crm.Infrastructure.Repositories
             _context = context;
             _table = _context.Set<TEntity>();
         }
-
-        public async Task<List<TEntity>> GetAll(int page = 1)
+        
+        public async Task<List<TEntity>> GetAll()
         {
-            return await _table.ToListAsync();
+            
+             return await _table.ToListAsync();
         }
 
         public async Task<TEntity?> GetById(TKey id)

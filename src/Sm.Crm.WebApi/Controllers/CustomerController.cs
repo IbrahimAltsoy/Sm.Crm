@@ -45,10 +45,10 @@ public class CustomerController : ControllerBase
     //}
 
     [HttpGet]
-    public async Task<IActionResult> GetAll([FromQuery] CustomerGetAllQeryRequest request)
+    public async Task<IActionResult> Get([FromQuery] CustomerGetAllQeryRequest request)
     {
-        List<CustomerGetAllQeryResponse> response = await _mediator.Send(request);
-        return Ok(response.Take(5).ToList());
+        CustomerGetAllQeryResponse response = await _mediator.Send(request);
+        return Ok(response);
     }
     [HttpPost]
     public async Task<IActionResult> Create(CreateCustomerCommandRequest create)
