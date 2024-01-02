@@ -1,15 +1,18 @@
-﻿using Sm.Crm.Domain.Common;
+﻿using Microsoft.AspNetCore.Identity;
+using Sm.Crm.Domain.Common;
 
 namespace Sm.Crm.Domain.Entities;
 
-public class User : BaseEntity<int>
+public class User : IdentityUser<int>, IEntity<int>
 {
-    public string Username { get; set; }
-    public string Email { get; set; }
-    public string Password { get; set; }
-    public string Roles { get; set; }
-    public string ActivationKey { get; set; }
-    public string IsActive { get; set; }
+    //public string Username { get; set; }
+    //public string Email { get; set; }
+    //public string Password { get; set; }
+    public string Name { get; set; }
+    public string Surname { get; set; }
+    public string? Roles { get; set; }
+    public string? ActivationKey { get; set; }
+    public string? IsActive { get; set; }
 
     // Navigation properties
     public Customer CustomerFk { get; set; }

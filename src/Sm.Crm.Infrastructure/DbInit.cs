@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Sm.Crm.Infrastructure.Persistence.Seeders;
 
@@ -14,10 +15,10 @@ public static class DbInitExtensions
         //context.Database.EnsureDeleted();
         //context.Database.EnsureCreated();
         //context.Database.Migrate();
-
-        // LST
+        //// LST
         //await new DepartmentSeeder().Seed(context);
 
         //await new CustomerSeeder().Seed(context);
+
     }
 }

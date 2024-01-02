@@ -1,11 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Sm.Crm.Application.Common.Interfaces;
+using Sm.Crm.Domain;
 using Sm.Crm.Domain.Entities;
 using Sm.Crm.Domain.Entities.LST;
 using System.Reflection;
 namespace Sm.Crm.Infrastructure.Persistence;
 
-public class ApplicationDbContext : DbContext,IApplicationDbContext
+public class ApplicationDbContext : IdentityDbContext<User, AppRole, int>, IApplicationDbContext
 {
     public DbSet<Customer> Customers { get; set; }
     public DbSet<Employee> Employees { get; set; }

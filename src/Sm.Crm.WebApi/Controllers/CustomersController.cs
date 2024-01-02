@@ -18,7 +18,7 @@ namespace Sm.Crm.WebApi.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class CustomerController : ControllerBase
+public class CustomersController : ControllerBase
 {
 
     readonly IMediator _mediator;
@@ -28,7 +28,7 @@ public class CustomerController : ControllerBase
 
 
 
-    public CustomerController(IMediator mediator, ICustomerService customerService, ICustomerQueryRepository customerQueryRepository)
+    public CustomersController(IMediator mediator, ICustomerService customerService, ICustomerQueryRepository customerQueryRepository)
     {
 
         _mediator = mediator;

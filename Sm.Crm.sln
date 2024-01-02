@@ -3,13 +3,18 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sm.Crm.Domain", "src\Sm.Crm.Domain\Sm.Crm.Domain.csproj", "{1F0927A8-BB54-4F05-92F8-57BAC064F03B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sm.Crm.Domain", "src\Sm.Crm.Domain\Sm.Crm.Domain.csproj", "{1F0927A8-BB54-4F05-92F8-57BAC064F03B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sm.Crm.Application", "src\Sm.Crm.Application\Sm.Crm.Application.csproj", "{9BCFA6E6-1BB8-4699-98B8-0CF089CF0D9C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sm.Crm.Application", "src\Sm.Crm.Application\Sm.Crm.Application.csproj", "{9BCFA6E6-1BB8-4699-98B8-0CF089CF0D9C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sm.Crm.Infrastructure", "src\Sm.Crm.Infrastructure\Sm.Crm.Infrastructure.csproj", "{AD848EE3-C535-4D20-BD1C-60F5EA9157AC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sm.Crm.Infrastructure", "src\Sm.Crm.Infrastructure\Sm.Crm.Infrastructure.csproj", "{AD848EE3-C535-4D20-BD1C-60F5EA9157AC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sm.Crm.WebApi", "src\Sm.Crm.WebApi\Sm.Crm.WebApi.csproj", "{2178BD0B-0944-45F7-B5E3-E8F8059061E8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sm.Crm.WebApi", "src\Sm.Crm.WebApi\Sm.Crm.WebApi.csproj", "{2178BD0B-0944-45F7-B5E3-E8F8059061E8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C6BB3C04-7475-489A-B87A-B7CC0BCB1A43}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
