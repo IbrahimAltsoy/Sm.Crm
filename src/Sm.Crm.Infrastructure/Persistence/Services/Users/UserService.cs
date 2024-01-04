@@ -9,6 +9,7 @@ using AutoMapper;
 using Sm.Crm.Application.Repositories.Users;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Sm.Crm.Application.DTOs.Customers;
 
 namespace Sm.Crm.Infrastructure.Persistence.Services.Users
 {
@@ -66,9 +67,23 @@ namespace Sm.Crm.Infrastructure.Persistence.Services.Users
 
         public async Task<List<UserReadDto>> GetUserAllAsync()
         {
-            var users = await _userQueryRepository.GetAll();            
-            var map = _mapper.Map<List<UserReadDto>>(users);         
-            return map;
+            //List<Customer> customers = await _customerQueryRepository.GetAll();
+            //List<ReadCustomerDto> result = new List<ReadCustomerDto>();
+            //foreach (var customer in customers)
+            //{
+            //    result.Add(_mapper.Map<ReadCustomerDto>(customer));
+            //}
+            //return result;
+            List<User> users = await _userQueryRepository.GetAll();
+            List<UserReadDto> result = new List<UserReadDto>();
+            foreach(var user in users.ToList())
+            {
+                result.Add(_mapper.Map<UserReadDto>(user));
+            }
+            return result;
+            //var users = await _userQueryRepository.GetAll();            
+            //var map = _mapper.Map<List<UserReadDto>>(users);         
+            //return map;
            
 
         }

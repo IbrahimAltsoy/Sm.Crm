@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Sm.Crm.Application.DTOs.Users;
 using Sm.Crm.Application.Features.Commands.Users.CreateUser;
+using Sm.Crm.Application.Features.Commands.Users.UpdateUser;
+using Sm.Crm.Application.Features.Queries.Users.GetAllUser;
+using Sm.Crm.Application.Features.Queries.Users.GetUserById;
 using Sm.Crm.Application.Services.Users;
 
 namespace Sm.Crm.WebApi.Controllers
@@ -19,17 +22,20 @@ namespace Sm.Crm.WebApi.Controllers
             _mediator = mediator;
             _userService = userService;
         }
+    
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Get([FromQuery] GetAllUserQueryRequest request)
         {
-          
-            return Ok(await _userService.GetUserAllAsync());
+            GetAllUserQueryResponse response = await _mediator.Send(request);
+            return Ok(response);
+            
         }
+
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById([FromQuery] int id)
+        public async Task<IActionResult> GetById([FromQuery] GetUserByIdQueryRequest request)
         {
-           await _userService.GetUserByIdAsync(id);
-            return Ok(await _userService.GetUserByIdAsync(id));
+            GetUserByIdQueryResponse response= await _mediator.Send(request);
+            return Ok(response);
         }
 
         [HttpPost]
@@ -39,12 +45,14 @@ namespace Sm.Crm.WebApi.Controllers
             //user: username:string password: Response35.
             return Ok(response);
         }
+       
         [HttpPut]
-        public async Task<IActionResult> Update(UserUpdateDto userCreate)
+        public async Task<IActionResult> Update(UpdateUserCommandRequest request)
         {
-            await _userService.UpdateUserAsync(userCreate);
+            UpdateUserCommandResponse response = await _mediator.Send(request);
+            
             return Ok("Güncelleme başarılı bir şekilde yapılmıştır.");
         }
-             
+
     }
 }

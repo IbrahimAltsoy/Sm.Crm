@@ -51,12 +51,7 @@ namespace Sm.Crm.Infrastructure.Persistence.Services.Customers
                 result.Add(_mapper.Map<ReadCustomerDto>(customer));
             }
             return result;
-
-            ////var customers = _mapper.Map<List<ReadCustomerDto>>(_customerReadRepository.GetAll(true));
-            //var customers = _mapper.Map<List<ReadCustomerDto>>(_customerQueryRepository.GetAll());
-
-            //int a = 5;
-            //return customers;
+           
         }
 
         public async Task CustomerUpdateAsync(CustomerUpdateDto customerUpdate)
