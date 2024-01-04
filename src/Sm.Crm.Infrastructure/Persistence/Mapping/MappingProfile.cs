@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Sm.Crm.Application.DTOs.Customers;
+using Sm.Crm.Application.DTOs.Users;
 using Sm.Crm.Domain.Entities;
 
 namespace Sm.Crm.Infrastructure.Persistence.Mapping
@@ -8,7 +9,9 @@ namespace Sm.Crm.Infrastructure.Persistence.Mapping
     {
         public MappingProfile()
         {
-            CreateMap<ReadCustomerDto, Customer>().ReverseMap();            
+            CreateMap<ReadCustomerDto, Customer>().ReverseMap();
+            CreateMap<UserReadDto, User>().ReverseMap();
+            CreateMap<UserUpdateDto, User>().ReverseMap();
                    
         }
     }

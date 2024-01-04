@@ -3,6 +3,12 @@ using Sm.Crm.Application.DTOs.Users;
 using Sm.Crm.Application.Services.Users;
 using Sm.Crm.Domain.Entities;
 using Sm.Crm.Application.Features.Commands.Users.CreateUser;
+using Sm.Crm.Application.Repositories;
+using Microsoft.EntityFrameworkCore;
+using AutoMapper;
+using Sm.Crm.Application.Repositories.Users;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace Sm.Crm.Infrastructure.Persistence.Services.Users
 {
@@ -10,11 +16,18 @@ namespace Sm.Crm.Infrastructure.Persistence.Services.Users
     {
 
 
-        readonly UserManager<User> _userManager;
+        readonly UserManager<User> _userManager;      
+        readonly IMapper _mapper;
+        readonly IUserCommandRepository _commandRepository;
+        readonly IUserQueryRepository _userQueryRepository;
+              
 
-        public UserService(UserManager<User> userManager)
+        public UserService(UserManager<User> userManager,IMapper mapper, IUserCommandRepository commandRepository, IUserQueryRepository userQueryRepository)
         {
-            _userManager = userManager;
+            _userManager = userManager;            
+            _mapper = mapper;
+            _commandRepository = commandRepository;
+            _userQueryRepository = userQueryRepository;
         }
 
         public async Task<CreateUserCommandResponse> CreateUserAsync(UserCreateDto userCreate)
@@ -44,24 +57,47 @@ namespace Sm.Crm.Infrastructure.Persistence.Services.Users
 
         }
 
-        //public Task<UserReadDto> GetAppUserByIdAsync(int userId)
-        //{
-        //    throw new NotImplementedException();
-        //}
+        public async Task<UserReadDto> GetUserByIdAsync( int userId)
+        {
+            var result = await _userQueryRepository.GetById(userId);
+            var map = _mapper.Map<UserReadDto>(result);
+            return map;
+        }
 
-        //public Task<List<UserReadDto>> GetUserAllAsync()
-        //{
-        //    throw new NotImplementedException();
-        //}
+        public async Task<List<UserReadDto>> GetUserAllAsync()
+        {
+            var users = await _userQueryRepository.GetAll();            
+            var map = _mapper.Map<List<UserReadDto>>(users);         
+            return map;
+           
+
+        }
+        public async Task<IdentityResult> UpdateUserAsync(UserUpdateDto userCreate)
+        {
+            User? user = await _userQueryRepository.GetById(userCreate.Id);
+            
+           
+                user.Name = userCreate.Name;
+                user.Surname = userCreate.Surname;
+                user.UserName = userCreate.UserName;
+                user.Email = userCreate.Email;
+                user.PhoneNumber = userCreate.PhoneNumber;
+                //await _commandRepository.Update(user);
+                //user.PasswordHash = userCreate.Password;
+                var result = await _userManager.UpdateAsync(user);
+                return result;
+           
+            
+
+
+        
+        }
 
         //public Task<string> GetUserRoleAsync(UserReadDto user)
         //{
         //    throw new NotImplementedException();
         //}
 
-        //public Task<IdentityResult> UpdateUserAsync(UserUpdateDto userCreate)
-        //{
-        //    throw new NotImplementedException();
-        //}
+
     }
 }

@@ -1,12 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+
+using Sm.Crm.Application.Repositories.Users;
+using Sm.Crm.Domain.Entities;
+using Sm.Crm.Infrastructure.Persistence;
 
 namespace Sm.Crm.Infrastructure.Repositories.Users
 {
-    internal class UserCommandRepository
+    public class UserCommandRepository : CommandRepository<User, int>, IUserCommandRepository
     {
+        public UserCommandRepository(ApplicationDbContext context) : base(context)
+        {
+        }
     }
 }
