@@ -10,6 +10,7 @@ using Sm.Crm.Application.Repositories.Users;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Sm.Crm.Application.DTOs.Customers;
+using Sm.Crm.Application.Exceptionss;
 
 namespace Sm.Crm.Infrastructure.Persistence.Services.Users
 {
@@ -106,6 +107,19 @@ namespace Sm.Crm.Infrastructure.Persistence.Services.Users
 
 
         
+        }
+
+        public async Task UpdateRefreshToken(string refreshToken, User user, DateTime accessTokenDate, int addOnAccessTokenTime)
+        {
+
+            if (user != null)
+            {
+                user.RefreshToken = refreshToken;
+                user.RefreshTokenEndDate = accessTokenDate.AddSeconds(addOnAccessTokenTime);
+                await _userManager.UpdateAsync(user);
+            }
+            else
+                throw new NotFoundUserExceptions();
         }
 
         //public Task<string> GetUserRoleAsync(UserReadDto user)

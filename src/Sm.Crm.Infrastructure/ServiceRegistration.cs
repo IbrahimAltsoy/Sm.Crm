@@ -9,18 +9,22 @@ using Sm.Crm.Application.DTOs.Customers;
 using Sm.Crm.Application.Repositories;
 using Sm.Crm.Application.Repositories.Customers;
 using Sm.Crm.Application.Repositories.Users;
+using Sm.Crm.Application.Services.Authencation;
 using Sm.Crm.Application.Services.Customers;
 using Sm.Crm.Application.Services.Users;
+using Sm.Crm.Application.Tokens;
 using Sm.Crm.Application.Validator.Customer;
 using Sm.Crm.Domain;
 using Sm.Crm.Domain.Entities;
 using Sm.Crm.Infrastructure.Persistence;
 using Sm.Crm.Infrastructure.Persistence.Mapping;
+using Sm.Crm.Infrastructure.Persistence.Services.Authencation;
 using Sm.Crm.Infrastructure.Persistence.Services.Customers;
 using Sm.Crm.Infrastructure.Persistence.Services.Users;
 using Sm.Crm.Infrastructure.Repositories;
 using Sm.Crm.Infrastructure.Repositories.Customers;
 using Sm.Crm.Infrastructure.Repositories.Users;
+using Sm.Crm.Infrastructure.Tokens;
 
 namespace Sm.Crm.Infrastructure
 {
@@ -56,7 +60,10 @@ namespace Sm.Crm.Infrastructure
             services.AddScoped<IUserQueryRepository, UserQueryRepository>();
             services.AddScoped<ICustomerService, CustomerService>();
             services.AddScoped<IUserService, UserService>();
-          
+            services.AddScoped<ITokenHandler, TokenHandler>();
+            services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IInternalAuthencation, AuthService>();
+            services.AddScoped<IExternalAuthencation, AuthService>();
             //services.AddScoped<IValidator<CreateCustomerDto>, CreateCustomerValidator>();
 
             return services;

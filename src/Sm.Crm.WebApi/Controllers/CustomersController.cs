@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Sm.Crm.Application.DTOs.Customers;
@@ -18,6 +19,7 @@ namespace Sm.Crm.WebApi.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+//[Authorize(AuthenticationSchemes = "Admin")]
 public class CustomersController : ControllerBase
 {
 

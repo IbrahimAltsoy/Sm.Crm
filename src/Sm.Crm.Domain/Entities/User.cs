@@ -14,6 +14,11 @@ public class User : IdentityUser<int>, IEntity<int>
     public string? ActivationKey { get; set; }
     public string? IsActive { get; set; }
 
+  
+    public string? RefreshToken { get; set; }
+    public DateTime? RefreshTokenEndDate { get; set; }
+
     // Navigation properties
     public Customer CustomerFk { get; set; }
 }
+
