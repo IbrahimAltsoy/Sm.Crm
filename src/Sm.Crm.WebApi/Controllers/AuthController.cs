@@ -1,7 +1,10 @@
-﻿using MediatR;
+﻿using MailKit.Net.Smtp;
+using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MimeKit;
 using Sm.Crm.Application.Features.Commands.Users.LoginRefreshToken;
+using Sm.Crm.Application.Features.Commands.Users.PasswordReset;
 using Sm.Crm.Application.Features.Commands.Users.UserLogin;
 
 namespace Sm.Crm.WebApi.Controllers
@@ -20,6 +23,7 @@ namespace Sm.Crm.WebApi.Controllers
         public async Task<IActionResult> Login(UserLoginCommandRequest request)
         {
             UserLoginCommandResponse response = await _mediator.Send(request);
+            int a = 5;
             return Ok(response);
         }
         [HttpPost("[action]")]
@@ -30,5 +34,12 @@ namespace Sm.Crm.WebApi.Controllers
 
 
         }
+        [HttpPost("password-reset")]
+        public async Task<IActionResult> PasswordReset([FromBody] PasswordResetCommandRequest request)
+        {
+            PasswordResetCommandResponse response = await _mediator.Send(request);
+            return Ok(response);
+        }
+        
     }
 }

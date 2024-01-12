@@ -1,6 +1,7 @@
 ﻿
 using AutoMapper;
 using FluentValidation;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,6 +12,7 @@ using Sm.Crm.Application.Repositories.Customers;
 using Sm.Crm.Application.Repositories.Users;
 using Sm.Crm.Application.Services.Authencation;
 using Sm.Crm.Application.Services.Customers;
+using Sm.Crm.Application.Services.Email;
 using Sm.Crm.Application.Services.Users;
 using Sm.Crm.Application.Tokens;
 using Sm.Crm.Application.Validator.Customer;
@@ -20,6 +22,7 @@ using Sm.Crm.Infrastructure.Persistence;
 using Sm.Crm.Infrastructure.Persistence.Mapping;
 using Sm.Crm.Infrastructure.Persistence.Services.Authencation;
 using Sm.Crm.Infrastructure.Persistence.Services.Customers;
+using Sm.Crm.Infrastructure.Persistence.Services.Email;
 using Sm.Crm.Infrastructure.Persistence.Services.Users;
 using Sm.Crm.Infrastructure.Repositories;
 using Sm.Crm.Infrastructure.Repositories.Customers;
@@ -51,7 +54,10 @@ namespace Sm.Crm.Infrastructure
                 options.Password.RequireLowercase = false;
                 options.Password.RequireUppercase = false;
 
-            }).AddEntityFrameworkStores<ApplicationDbContext>();
+            }).AddEntityFrameworkStores<ApplicationDbContext>()
+            .AddDefaultTokenProviders();
+
+
             services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
 
             services.AddScoped<ICustomerQueryRepository, CustomerQueryRepository>();
@@ -64,6 +70,7 @@ namespace Sm.Crm.Infrastructure
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IInternalAuthencation, AuthService>();
             services.AddScoped<IExternalAuthencation, AuthService>();
+            services.AddScoped<IEmailService, EmailService>();
             //services.AddScoped<IValidator<CreateCustomerDto>, CreateCustomerValidator>();
 
             return services;

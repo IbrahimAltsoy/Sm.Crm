@@ -25,10 +25,7 @@ public class CustomersController : ControllerBase
 
     readonly IMediator _mediator;
     readonly ICustomerService _customerService;
-    readonly ICustomerQueryRepository _customerQueryRepository;
-    
-
-
+    readonly ICustomerQueryRepository _customerQueryRepository;  
 
     public CustomersController(IMediator mediator, ICustomerService customerService, ICustomerQueryRepository customerQueryRepository)
     {
@@ -38,6 +35,7 @@ public class CustomersController : ControllerBase
         _customerQueryRepository = customerQueryRepository;
 
     }
+    //Deneme amaçlı kullanılmıştır.
     //[HttpGet]
     //public async Task<IActionResult> GetAll()
     //{

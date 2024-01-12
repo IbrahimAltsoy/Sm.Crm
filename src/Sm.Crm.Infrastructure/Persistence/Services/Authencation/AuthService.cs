@@ -1,12 +1,15 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Sm.Crm.Application.DTOs.Users;
 using Sm.Crm.Application.Exceptionss;
 using Sm.Crm.Application.Services.Authencation;
+using Sm.Crm.Application.Services.Email;
 using Sm.Crm.Application.Services.Users;
 using Sm.Crm.Application.Tokens;
 using Sm.Crm.Domain.Entities;
+using System.Text;
 
 namespace Sm.Crm.Infrastructure.Persistence.Services.Authencation
 {
@@ -18,8 +21,9 @@ namespace Sm.Crm.Infrastructure.Persistence.Services.Authencation
         readonly IConfiguration _configuration;
         readonly SignInManager<User> _signInManager;
         readonly IUserService _userService;
+        readonly IEmailService _emailService;
 
-        public AuthService(HttpClient httpClient, UserManager<User> userManager, ITokenHandler tokenHandler, IConfiguration configuration, SignInManager<User> signInManager, IUserService userService)
+        public AuthService(HttpClient httpClient, UserManager<User> userManager, ITokenHandler tokenHandler, IConfiguration configuration, SignInManager<User> signInManager, IUserService userService, IEmailService emailService)
         {
             _httpClient = httpClient;
             _userManager = userManager;
@@ -27,6 +31,7 @@ namespace Sm.Crm.Infrastructure.Persistence.Services.Authencation
             _configuration = configuration;
             _signInManager = signInManager;
             _userService = userService;
+            _emailService = emailService;
         }
 
         public async Task<Token> LoginAsync(string userNameOrEmail, string password, int accessTokenLifeTime)
@@ -60,6 +65,21 @@ namespace Sm.Crm.Infrastructure.Persistence.Services.Authencation
             }
             else
                 throw new NotFoundUserExceptions();
+        }
+
+        public async Task ResetPasswordAsync(string email)
+        {
+            User? user = await _userManager.FindByEmailAsync(email);
+            if (user != null)
+            {
+                string resetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
+                byte[] tokenBytes = Encoding.UTF8.GetBytes(resetToken);
+                resetToken = WebEncoders.Base64UrlEncode(tokenBytes);
+                await _emailService.SendPasswordResetMailAsync(email, user.Id.ToString(), resetToken);
+
+            }
+
+         
         }
     }
 }
