@@ -12,6 +12,7 @@ namespace Sm.Crm.Application.Services.Users
         Task<IdentityResult> UpdateUserAsync(UserUpdateDto userCreate);
         Task<UserReadDto> GetUserByIdAsync(int userId);
         Task UpdateRefreshToken(string refreshToken, User user, DateTime accessTokenDate, int addOnAccessTokenTime);
+        Task UpdatePasswordAsync(string userId, string resetToken, string newPassword);
         //Task<string> GetUserRoleAsync(UserReadDto user);
 
     }

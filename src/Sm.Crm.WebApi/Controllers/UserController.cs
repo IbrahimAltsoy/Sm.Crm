@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Sm.Crm.Application.DTOs.Users;
 using Sm.Crm.Application.Features.Commands.Users.CreateUser;
+using Sm.Crm.Application.Features.Commands.Users.UpdatePassword;
 using Sm.Crm.Application.Features.Commands.Users.UpdateUser;
 using Sm.Crm.Application.Features.Queries.Users.GetAllUser;
 using Sm.Crm.Application.Features.Queries.Users.GetUserById;
@@ -52,6 +53,14 @@ namespace Sm.Crm.WebApi.Controllers
             UpdateUserCommandResponse response = await _mediator.Send(request);
             
             return Ok("Güncelleme başarılı bir şekilde yapılmıştır.");
+        }
+        [HttpPost("update-password")]
+        public async Task<IActionResult> UpdatePassword([FromBody] UpdatePasswordCommandRequest request)
+        {
+            UpdatePasswordCommandResponse response = await _mediator.Send(request);
+            int a = 5;
+            return Ok(response);
+
         }
 
     }

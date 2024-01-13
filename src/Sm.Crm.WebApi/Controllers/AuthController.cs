@@ -5,7 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 using MimeKit;
 using Sm.Crm.Application.Features.Commands.Users.LoginRefreshToken;
 using Sm.Crm.Application.Features.Commands.Users.PasswordReset;
+using Sm.Crm.Application.Features.Commands.Users.UpdatePassword;
 using Sm.Crm.Application.Features.Commands.Users.UserLogin;
+using Sm.Crm.Application.Features.Commands.Users.VerifyResetToken;
 
 namespace Sm.Crm.WebApi.Controllers
 {
@@ -38,6 +40,12 @@ namespace Sm.Crm.WebApi.Controllers
         public async Task<IActionResult> PasswordReset([FromBody] PasswordResetCommandRequest request)
         {
             PasswordResetCommandResponse response = await _mediator.Send(request);
+            return Ok(response);
+        }
+        [HttpPost("verify-reset-token")]
+        public async Task<IActionResult> VerifyResetToken([FromBody]VerifyResetTokenCommandRequest request)
+        {
+            VerifyResetTokenCommandResponse response = await _mediator.Send(request);
             return Ok(response);
         }
         

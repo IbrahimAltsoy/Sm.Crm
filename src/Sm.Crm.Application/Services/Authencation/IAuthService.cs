@@ -3,5 +3,6 @@
     public interface IAuthService:IInternalAuthencation, IExternalAuthencation
     {
         Task ResetPasswordAsync(string email);
+        Task<bool> VerifyResetTokenAsync(string resetToken, string userId);
     }
 }

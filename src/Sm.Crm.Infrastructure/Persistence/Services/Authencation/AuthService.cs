@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Sm.Crm.Application.DTOs.Users;
 using Sm.Crm.Application.Exceptionss;
+using Sm.Crm.Application.Helpers;
 using Sm.Crm.Application.Services.Authencation;
 using Sm.Crm.Application.Services.Email;
 using Sm.Crm.Application.Services.Users;
@@ -73,13 +74,27 @@ namespace Sm.Crm.Infrastructure.Persistence.Services.Authencation
             if (user != null)
             {
                 string resetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
-                byte[] tokenBytes = Encoding.UTF8.GetBytes(resetToken);
-                resetToken = WebEncoders.Base64UrlEncode(tokenBytes);
+                //byte[] tokenBytes = Encoding.UTF8.GetBytes(resetToken);
+                //resetToken = WebEncoders.Base64UrlEncode(tokenBytes);
+               resetToken = resetToken.UrlEncode();
                 await _emailService.SendPasswordResetMailAsync(email, user.Id.ToString(), resetToken);
 
             }
 
          
+        }
+
+        public async Task<bool> VerifyResetTokenAsync(string resetToken, string userId)
+        {
+            User? user = await _userManager.FindByIdAsync(userId);
+            if (user != null)
+            {
+                //byte[] tokenBytes = WebEncoders.Base64UrlDecode(resetToken);
+                //resetToken = Encoding.UTF8.GetString(tokenBytes);
+               resetToken = resetToken.UrlDecode();
+                return await _userManager.VerifyUserTokenAsync(user, _userManager.Options.Tokens.PasswordResetTokenProvider, "ResetPassword", resetToken);
+            }
+            return false;
         }
     }
 }

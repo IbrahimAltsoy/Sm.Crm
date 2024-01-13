@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Sm.Crm.Application.DTOs.Customers;
 using Sm.Crm.Application.Exceptionss;
+using Sm.Crm.Application.Helpers;
 
 namespace Sm.Crm.Infrastructure.Persistence.Services.Users
 {
@@ -120,6 +121,19 @@ namespace Sm.Crm.Infrastructure.Persistence.Services.Users
             }
             else
                 throw new NotFoundUserExceptions();
+        }
+
+        public async Task UpdatePasswordAsync(string userId, string resetToken, string newPassword)
+        {
+            User? user = await _userManager.FindByIdAsync(userId);
+            if (user != null)
+            {
+                resetToken = resetToken.UrlDecode();
+                IdentityResult result = await _userManager.ResetPasswordAsync(user,resetToken, newPassword);
+                if (result.Succeeded)
+                    await _userManager.UpdateSecurityStampAsync(user);
+                else new PasswordChangeFailledException();
+            }
         }
 
         //public Task<string> GetUserRoleAsync(UserReadDto user)
