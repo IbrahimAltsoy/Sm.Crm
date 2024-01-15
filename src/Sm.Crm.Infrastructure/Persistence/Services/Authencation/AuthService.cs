@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Google.Apis.Auth;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -23,7 +24,7 @@ namespace Sm.Crm.Infrastructure.Persistence.Services.Authencation
         readonly SignInManager<User> _signInManager;
         readonly IUserService _userService;
         readonly IEmailService _emailService;
-
+        
         public AuthService(HttpClient httpClient, UserManager<User> userManager, ITokenHandler tokenHandler, IConfiguration configuration, SignInManager<User> signInManager, IUserService userService, IEmailService emailService)
         {
             _httpClient = httpClient;
@@ -34,7 +35,7 @@ namespace Sm.Crm.Infrastructure.Persistence.Services.Authencation
             _userService = userService;
             _emailService = emailService;
         }
-
+              
         public async Task<Token> LoginAsync(string userNameOrEmail, string password, int accessTokenLifeTime)
         {
             User? user = await _userManager.FindByNameAsync(userNameOrEmail);
@@ -96,5 +97,51 @@ namespace Sm.Crm.Infrastructure.Persistence.Services.Authencation
             }
             return false;
         }
+        public async Task<Token> GoogleLoginAsync(string idToken, int accessTokenLifeTime)
+        {
+            var settings = new GoogleJsonWebSignature.ValidationSettings()
+            {
+                Audience = new List<string> { _configuration["Google:PROVIDER_ID"] }
+            };
+            var payload = await GoogleJsonWebSignature.ValidateAsync(idToken, settings);
+            var info = new UserLoginInfo("GOOGLE", payload.Subject, "GOOGLE");
+
+
+            User? user = await _userManager.FindByLoginAsync(info.LoginProvider, info.ProviderKey);
+            bool result = user != null;
+            if (user == null)
+            {
+                user = await _userManager.FindByEmailAsync(payload.Email);
+                if (user == null)
+                {
+                    user = new User()
+                    {
+                        //Id = Guid.NewGuid().ToString(),
+                        Email = payload.Email,
+                        UserName = payload.Email,
+                        Surname = payload.Name,
+                        Name = payload.Name,
+                    };
+                    var identiyResult = await _userManager.CreateAsync(user);
+                    result = identiyResult.Succeeded;
+                }
+            }
+            if (result)
+            {
+                await _userManager.AddLoginAsync(user, info);
+                Token token = _tokenHandler.CreateAccessToken(15 * 60, user);
+                await _userService.UpdateRefreshToken(token.RefreshToken, user, token.Expiration, 5 * 60);
+                return token;
+
+            }
+            else
+            {
+                throw new Exception("Invalid external authacation.");
+            }
+
+
+
+        }
+
     }
 }

@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MimeKit;
+using Sm.Crm.Application.Features.Commands.Users.GoogleLogin;
 using Sm.Crm.Application.Features.Commands.Users.LoginRefreshToken;
 using Sm.Crm.Application.Features.Commands.Users.PasswordReset;
 using Sm.Crm.Application.Features.Commands.Users.UpdatePassword;
@@ -24,8 +25,13 @@ namespace Sm.Crm.WebApi.Controllers
         [HttpPost("[action]")]
         public async Task<IActionResult> Login(UserLoginCommandRequest request)
         {
-            UserLoginCommandResponse response = await _mediator.Send(request);
-            int a = 5;
+            UserLoginCommandResponse response = await _mediator.Send(request);            
+            return Ok(response);
+        }
+        [HttpPost("google-login")]
+        public async Task<IActionResult> GoogleLogin(GoogleLoginCommandRequest googleLoginCommandRequest)
+        {
+            GoogleLoginCommandResponse response = await _mediator.Send(googleLoginCommandRequest);
             return Ok(response);
         }
         [HttpPost("[action]")]
