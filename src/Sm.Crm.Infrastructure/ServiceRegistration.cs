@@ -75,12 +75,6 @@ namespace Sm.Crm.Infrastructure
 
             return services;
         }
-        //public static MapperConfiguration Initialize()
-        //{
-        //    return new MapperConfiguration(cfg =>
-        //    {
-        //        cfg.AddProfile<MappingProfile>();
-        //    });
-        //}
+       
     }
 }
