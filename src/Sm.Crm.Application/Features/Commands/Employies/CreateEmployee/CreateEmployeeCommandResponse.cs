@@ -2,5 +2,6 @@
 {
     public class CreateEmployeeCommandResponse
     {
+        public string Message { get; set; } = "Çalışan başarılı bir şekilde eklendi";
     }
 }

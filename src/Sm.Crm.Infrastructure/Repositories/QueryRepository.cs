@@ -35,8 +35,8 @@ namespace Sm.Crm.Infrastructure.Repositories
             var query = Table.AsQueryable();
             if (tracking==false)
                 query = query.AsNoTracking();
-            //return await query.FirstOrDefaultAsync(p=>p.Id.ToString()==id);
-            return await Table.FindAsync(id);
+            return await query.FirstOrDefaultAsync(p => p.Id.Equals(id));
+            //return await Table.FindAsync(id);
         }
 
         public async Task<TEntity> GetSingleAsync(Expression<Func<TEntity, bool>> method, bool? tracking=false)

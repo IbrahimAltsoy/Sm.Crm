@@ -35,20 +35,7 @@ namespace Sm.Crm.Application.Features.Queries.Customers.CustomerGetAll
                 Customers = customers,
                 TotalCustomerCount = totalCustomerCount
             };
-            //    List<ReadCustomerDto> customers = await _customerService.GetAllCustomers();
-            //    List<CustomerGetAllQeryResponse> customerResponses = customers
-            //.Select(c => new CustomerGetAllQeryResponse
-            //{
-            //    IdentityNumber = c.IdentityNumber,
-            //    CompanyName = c.CompanyName,
-            //    BirthDate = c.BirthDate,
-            //    UserId = c.UserId
-            //})
-            //.ToList();
-
-            //    return customerResponses;
-
-            //}
+            
         }
     }
 }
