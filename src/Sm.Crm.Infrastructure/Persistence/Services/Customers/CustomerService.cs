@@ -44,7 +44,8 @@ namespace Sm.Crm.Infrastructure.Persistence.Services.Customers
 
         public async Task<List<ReadCustomerDto>> GetAllCustomers()
         {
-            List<Customer> customers = await _customerQueryRepository.GetAll();
+            // List<Customer> customers = await _customerQueryRepository.GetAll();
+            List<Customer> customers = _customerQueryRepository.GetAll().ToList();
             List<ReadCustomerDto> result = new List<ReadCustomerDto>();
             foreach (var customer in customers)
             {
@@ -56,7 +57,7 @@ namespace Sm.Crm.Infrastructure.Persistence.Services.Customers
 
         public async Task CustomerUpdateAsync(CustomerUpdateDto customerUpdate)
         {
-            Customer? customer = await _customerQueryRepository.GetById(customerUpdate.Id);
+            Customer? customer = await _customerQueryRepository.GetByIdAsync(customerUpdate.Id);
             if (customer != null)
             {
                 customer.CompanyName = customerUpdate.CompanyName;
@@ -70,7 +71,7 @@ namespace Sm.Crm.Infrastructure.Persistence.Services.Customers
 
         public async Task CustomerDelete(int id)
         {
-            Customer? customer = await _customerQueryRepository.GetById(id);
+            Customer? customer = await _customerQueryRepository.GetByIdAsync(id);
             if (customer != null)
             {
                 await _customerCommandRepository.Delete(customer);

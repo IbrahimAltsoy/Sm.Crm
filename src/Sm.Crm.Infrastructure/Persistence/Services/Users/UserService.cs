@@ -62,7 +62,7 @@ namespace Sm.Crm.Infrastructure.Persistence.Services.Users
 
         public async Task<UserReadDto> GetUserByIdAsync( int userId)
         {
-            var result = await _userQueryRepository.GetById(userId);
+            var result = await _userQueryRepository.GetByIdAsync(userId);
             var map = _mapper.Map<UserReadDto>(result);
             return map;
         }
@@ -76,7 +76,7 @@ namespace Sm.Crm.Infrastructure.Persistence.Services.Users
             //    result.Add(_mapper.Map<ReadCustomerDto>(customer));
             //}
             //return result;
-            List<User> users = await _userQueryRepository.GetAll();
+            List<User> users = _userQueryRepository.GetAll().ToList();
             List<UserReadDto> result = new List<UserReadDto>();
             foreach(var user in users.ToList())
             {
@@ -91,7 +91,7 @@ namespace Sm.Crm.Infrastructure.Persistence.Services.Users
         }
         public async Task<IdentityResult> UpdateUserAsync(UserUpdateDto userCreate)
         {
-            User? user = await _userQueryRepository.GetById(userCreate.Id);
+            User? user = await _userQueryRepository.GetByIdAsync(userCreate.Id);
             
            
                 user.Name = userCreate.Name;

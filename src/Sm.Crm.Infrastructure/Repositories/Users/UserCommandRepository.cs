@@ -1,5 +1,6 @@
 ﻿
 
+using Sm.Crm.Application.Repositories;
 using Sm.Crm.Application.Repositories.Users;
 using Sm.Crm.Domain.Entities;
 using Sm.Crm.Infrastructure.Persistence;

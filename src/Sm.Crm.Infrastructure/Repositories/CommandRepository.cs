@@ -5,45 +5,38 @@ using Sm.Crm.Application.Repositories;
 
 namespace Sm.Crm.Infrastructure.Repositories
 {
-    public class CommandRepository<TEntity, TKey> : IRepository<TEntity, TKey>
+    public class CommandRepository<TEntity, TKey> : ICommandRepository<TEntity, TKey>
     where TEntity : class, IEntity<TKey>
     {
         private readonly ApplicationDbContext _context;
-        private readonly DbSet<TEntity> _table;
+        
+       
 
         public CommandRepository(ApplicationDbContext context)
         {
             _context = context;
-            _table = _context.Set<TEntity>();
+           
+            
         }
-
-        public async Task<List<TEntity>> GetAll()
-        {
-            return await _table.ToListAsync();
-        }
-
-        public async Task<TEntity?> GetById(TKey id)
-        {
-            return await _table.FindAsync(id);
-        }
-
+        public DbSet<TEntity> Table => _context.Set<TEntity>();
+      
         public async Task Create(TEntity entity)
         {
-            _table.Add(entity);
+            Table.Add(entity);
             await _context.SaveChangesAsync();
             return;
         }
 
         public async Task Update(TEntity entity)
         {
-            _table.Update(entity);
+            Table.Update(entity);
             await _context.SaveChangesAsync();
             return;
         }
 
         public async Task Delete(TEntity entity)
         {
-            _table.Remove(entity);
+            Table.Remove(entity);
             await _context.SaveChangesAsync();
             return;
         }
@@ -51,19 +44,19 @@ namespace Sm.Crm.Infrastructure.Repositories
 
         public async Task DeleteById(TKey id)
         {
-            var entity = await _table.FindAsync(id);
+            var entity = await Table.FindAsync(id);
             if (entity != null) await Delete(entity);
         }
 
         public async Task SoftDelete(TEntity entity)
         {
-            var entityItem = await GetById(entity.Id);
+            var entityItem = await Table.FindAsync(entity.Id);
             if (entity is not BaseAuditableEntity) return;
             if (entityItem is null) return;
 
             (entityItem as BaseAuditableEntity).DeletedAt = DateTime.UtcNow;
 
-            _table.Update(entity);
+            Table.Update(entity);
             await _context.SaveChangesAsync();
         }
     }

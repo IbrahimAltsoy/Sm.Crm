@@ -19,4 +19,10 @@
     <ProjectReference Include="..\Sm.Crm.Domain\Sm.Crm.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\Commands\Employies\DeleteEmployee\" />
+    <Folder Include="Features\Commands\Employies\UpdateEmployee\" />
+    <Folder Include="Features\Queries\Employee\GetById\" />
+  </ItemGroup>
+
 </Project>

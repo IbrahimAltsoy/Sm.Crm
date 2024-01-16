@@ -17,7 +17,7 @@ namespace Sm.Crm.Application.Features.Commands.Users.UpdateUser
 
         public async Task<UpdateUserCommandResponse> Handle(UpdateUserCommandRequest request, CancellationToken cancellationToken)
         {
-            var user = await _userQueryRepository.GetById(request.Id);
+            var user = await _userQueryRepository.GetByIdAsync(request.Id);
             if (user!=null)
             {
                 user.Name = request.Name;
