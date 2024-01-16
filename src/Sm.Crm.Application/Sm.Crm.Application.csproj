@@ -19,4 +19,9 @@
     <ProjectReference Include="..\Sm.Crm.Domain\Sm.Crm.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\Commands\Sales\" />
+    <Folder Include="Features\Queries\Sales\" />
+  </ItemGroup>
+
 </Project>

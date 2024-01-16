@@ -23,18 +23,7 @@ namespace Sm.Crm.Application.Features.Commands.Employies.UpdateEmployee
             employee.DepartmentId = request.DepartmentId;
             employee.PhotoPath = request.PhotoPath;
             await _commandRepository.Update(employee);
-            //await _commandRepository.Update(new()
-            //{
-            //    Email = employee.Email,
-            //    Phone = employee.Phone,
-            //    DepartmentId = employee.DepartmentId,
-            //    PhotoPath = employee.PhotoPath
-            //    //Phone = request.Phone,
-            //    //Email = request.Email,
-            //    //DepartmentId = request.DepartmentId,
-            //    //PhotoPath = request.PhotoPath
-
-            //});
+            
             return new();
         }
     }

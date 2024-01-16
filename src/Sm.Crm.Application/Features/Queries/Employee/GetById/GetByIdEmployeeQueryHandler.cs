@@ -29,8 +29,6 @@ namespace Sm.Crm.Application.Features.Queries.Employee.GetById
                 Phone = employe.Phone,
                 Email = employe.Email,
                 PhotoPath = employe.PhotoPath
-
-
             };
         }
     }
