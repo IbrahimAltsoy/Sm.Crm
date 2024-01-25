@@ -20,7 +20,7 @@ public static class DbInitExtensions
 
         //await new CustomerSeeder().Seed(context);
         //await new EmployiesSeeder().Seed(context);
-       // await new SaleSeeder().Seed(context);
+        //await new SaleSeeder().Seed(context);
         //await new RequestSeeder().Seed(context);
 
     }

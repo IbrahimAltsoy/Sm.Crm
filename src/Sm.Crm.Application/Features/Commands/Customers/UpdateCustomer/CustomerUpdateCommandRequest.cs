@@ -7,6 +7,6 @@ namespace Sm.Crm.Application.Features.Commands.Customers.UpdateCustomer
         public int Id { get; set; }
         public string CompanyName { get; set; }
 
-        public string IdentityNumber { get; set; } = null!;
+        public string IdentityNumber { get; set; }
     }
 }

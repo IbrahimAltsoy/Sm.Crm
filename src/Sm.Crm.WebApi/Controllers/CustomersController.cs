@@ -8,6 +8,8 @@ using Sm.Crm.Application.Features.Commands.Customers.CreateCustomer;
 using Sm.Crm.Application.Features.Commands.Customers.CustomerDelete;
 using Sm.Crm.Application.Features.Commands.Customers.UpdateCustomer;
 using Sm.Crm.Application.Features.Queries.Customers.CustomerGetAll;
+using Sm.Crm.Application.Features.Queries.Customers.GetById;
+using Sm.Crm.Application.Features.Queries.Employee.GetById;
 using Sm.Crm.Application.Repositories.Customers;
 using Sm.Crm.Application.Services.Customers;
 using Sm.Crm.Domain.Entities;
@@ -43,7 +45,14 @@ public class CustomersController : ControllerBase
     //    int a = 5;
     //    return Ok(customers.Take(5).ToList());
     //}
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetByIdAsync([FromQuery] CustomerGetByIdQueryRequest request )
+    {
+        CustomerGetByIdQueryResponse response = await _mediator.Send(request);
 
+
+        return Ok(response);
+    }
     [HttpGet]
     public async Task<IActionResult> Get([FromQuery] CustomerGetAllQeryRequest request)
     {
