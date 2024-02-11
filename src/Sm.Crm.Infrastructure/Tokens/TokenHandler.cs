@@ -34,7 +34,7 @@ namespace Sm.Crm.Infrastructure.Tokens
                 issuer: _configuration["Token:Issuer"],
                 expires: token.Expiration,
                 notBefore: DateTime.UtcNow,
-                signingCredentials: signingCredentials,
+                signingCredentials: signingCredentials,          
                 claims: new List<Claim> { new(ClaimTypes.Name, user.UserName) }
                 );
           

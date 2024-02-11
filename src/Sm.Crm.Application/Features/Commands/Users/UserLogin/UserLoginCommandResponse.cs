@@ -4,15 +4,9 @@ namespace Sm.Crm.Application.Features.Commands.Users.UserLogin
 {
     public class UserLoginCommandResponse
     {
-        public Token Token { get; set; }
+        public Token AccessToken { get; set; }
         public string Message { get; set; }
+        public string UserName { get; set; }
     }
-    //public class LoginUserSuccessCommandResponse :UserLoginCommandResponse
-    //{
-    //   public Token Token { get; set; }
-    //}
-    //public class LoginUserUnSuccessCommandResponse :UserLoginCommandResponse
-    //{
-    //    public string Message { get; set; }
-    //}
+  
 }

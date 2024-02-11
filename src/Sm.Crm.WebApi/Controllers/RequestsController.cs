@@ -45,8 +45,8 @@ namespace Sm.Crm.WebApi.Controllers
             UpdateRequestCommandResponse response = await _mediator.Send(request);
             return Ok(response);
         }
-        [HttpDelete]
-        public async Task<IActionResult> Delete(DeleteRequestCommandRequest request)
+        [HttpDelete("{Id}")]
+        public async Task<IActionResult> Delete([FromRoute]DeleteRequestCommandRequest request)
         {
             DeleteRequestCommandResponse response = await _mediator.Send(request);
             return Ok(response);

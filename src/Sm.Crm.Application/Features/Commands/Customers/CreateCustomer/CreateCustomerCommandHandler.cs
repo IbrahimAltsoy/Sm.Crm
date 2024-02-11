@@ -20,8 +20,8 @@ namespace Sm.Crm.Application.Features.Commands.Customers.CreateCustomer
             {
                 CompanyName = request.CompanyName,
                 IdentityNumber = request.IdentityNumber,
-                CreatedAt = request.CreatedAt,
-                DeletedAt = request.DeletedAt,
+                CreatedAt = DateTime.UtcNow
+                //DeletedAt = request.DeletedAt,
             });
             return new();
             

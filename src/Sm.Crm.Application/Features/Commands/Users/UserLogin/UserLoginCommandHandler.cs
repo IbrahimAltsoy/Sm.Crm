@@ -15,11 +15,12 @@ namespace Sm.Crm.Application.Features.Commands.Users.UserLogin
 
         public async Task<UserLoginCommandResponse> Handle(UserLoginCommandRequest request, CancellationToken cancellationToken)
         {
-            var token = await _authService.LoginAsync(request.UsernameOrEmail, request.Password, 15 * 60);
+            var accessToken = await _authService.LoginAsync(request.UsernameOrEmail, request.Password, 15 * 60);
             return new UserLoginCommandResponse()
             {
-                Token = token,
-                Message = "Giriş Başarılı"
+                AccessToken = accessToken,
+                Message = "Giriş Başarılı",
+                UserName = request.UsernameOrEmail,
             };
         }
     }
