@@ -23,9 +23,9 @@ namespace Sm.Crm.Application.Features.Commands.Employies.CreateEmployee
                 Phone = request.Phone,
                 Email = request.Email,
                 IdentityNumber = request.IdentityNumber,
-                GenderId = request.GenderId,
-                DepartmentId = request.DepartmentId,
-                StartDate = DateTime.UtcNow,               
+                //GenderId = request.GenderId,
+                //DepartmentId = request.DepartmentId,
+                //StartDate = DateTime.UtcNow,               
                 PhotoPath = request.PhotoPath
             });
             return new();
