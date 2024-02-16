@@ -60,7 +60,7 @@ namespace Sm.Crm.Infrastructure.Persistence.Services.Email
            
             StringBuilder mail = new();
             mail.AppendLine("Merhaba<br>Eğer yeni şifre talebinde bulunduysanız aşağıdaki linkten şifrenizi yenileyebilirsiniz.<br>");
-            mail.AppendLine("<strong><a target=\"_blank\" href=\"" + _configuration["AngularClientUrl"] + "/update-password/" + userId + "/" + resetToken + "\">Yeni şifre talebi için tıklayınız...</a></strong><br><br>");
+            mail.AppendLine("<strong><a target=\"_blank\" href=\"" + _configuration["AngularClientUrl"] + "/updatepassword/" + userId + "/" + resetToken + "\">Yeni şifre talebi için tıklayınız...</a></strong><br><br>");
 
             mail.AppendLine("<span style=\"font-size:12px;\">NOT : Eğer ki bu talep tarafınızca gerçekleştirilmemişse lütfen bu maili ciddiye almayınız.</span><br>");
             mail.AppendLine("Saygılarımızla...<br><br><br>SF03_Crm Company");

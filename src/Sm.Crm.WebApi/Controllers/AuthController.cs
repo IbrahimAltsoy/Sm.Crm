@@ -54,6 +54,12 @@ namespace Sm.Crm.WebApi.Controllers
             VerifyResetTokenCommandResponse response = await _mediator.Send(request);
             return Ok(response);
         }
+        [HttpPost("password-update")]
+        public async Task<IActionResult> PasswordUpdate([FromBody] UpdatePasswordCommandRequest request)
+        {
+            UpdatePasswordCommandResponse response = await _mediator.Send(request);
+            return Ok(response);
+        }
         
     }
 }

@@ -19,6 +19,7 @@ namespace Sm.Crm.Application.Features.Queries.Departments.DepartmentGetAll
                 .Take(request.Size)
                 .Select(dep=>new
                 {
+                    dep.Id,
                     dep.Name
                 }).ToList();
             return new()

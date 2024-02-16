@@ -93,7 +93,6 @@ namespace Sm.Crm.Infrastructure.Persistence.Services.Users
         {
             User? user = await _userQueryRepository.GetByIdAsync(userCreate.Id);
             
-           
                 user.Name = userCreate.Name;
                 user.Surname = userCreate.Surname;
                 user.UserName = userCreate.UserName;
@@ -103,11 +102,6 @@ namespace Sm.Crm.Infrastructure.Persistence.Services.Users
                 //user.PasswordHash = userCreate.Password;
                 var result = await _userManager.UpdateAsync(user);
                 return result;
-           
-            
-
-
-        
         }
 
         public async Task UpdateRefreshToken(string refreshToken, User user, DateTime accessTokenDate, int addOnAccessTokenTime)
@@ -135,12 +129,5 @@ namespace Sm.Crm.Infrastructure.Persistence.Services.Users
                 else new PasswordChangeFailledException();
             }
         }
-
-        //public Task<string> GetUserRoleAsync(UserReadDto user)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-
     }
 }
