@@ -9,6 +9,7 @@ using Sm.Crm.Application.Common.Interfaces;
 using Sm.Crm.Application.DTOs.Customers;
 using Sm.Crm.Application.Repositories;
 using Sm.Crm.Application.Repositories.Customers;
+using Sm.Crm.Application.Repositories.Requests;
 using Sm.Crm.Application.Repositories.Users;
 using Sm.Crm.Application.Services.Authencation;
 using Sm.Crm.Application.Services.Customers;
@@ -26,6 +27,7 @@ using Sm.Crm.Infrastructure.Persistence.Services.Email;
 using Sm.Crm.Infrastructure.Persistence.Services.Users;
 using Sm.Crm.Infrastructure.Repositories;
 using Sm.Crm.Infrastructure.Repositories.Customers;
+using Sm.Crm.Infrastructure.Repositories.Requests;
 using Sm.Crm.Infrastructure.Repositories.Users;
 using Sm.Crm.Infrastructure.Tokens;
 
@@ -66,6 +68,7 @@ namespace Sm.Crm.Infrastructure
             services.AddScoped<ICustomerCommandRepository, CustomerCommandRepository>();
             services.AddScoped<IUserCommandRepository, UserCommandRepository>();
             services.AddScoped<IUserQueryRepository, UserQueryRepository>();
+            services.AddScoped<IRequestCommandReposityory, RequestCommandRepository>();
             services.AddScoped<ICustomerService, CustomerService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ITokenHandler, TokenHandler>();
