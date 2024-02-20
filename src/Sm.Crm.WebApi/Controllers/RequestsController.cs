@@ -8,6 +8,7 @@ using Sm.Crm.Application.Features.Commands.Requests.UpdateRequestStatus;
 using Sm.Crm.Application.Features.Queries.Employee.GetById;
 using Sm.Crm.Application.Features.Queries.Requests.GetAllRequest;
 using Sm.Crm.Application.Features.Queries.Requests.GetById;
+using Sm.Crm.Application.Features.Queries.Requests.RequestStatus;
 
 namespace Sm.Crm.WebApi.Controllers
 {
@@ -56,6 +57,12 @@ namespace Sm.Crm.WebApi.Controllers
         public async Task<IActionResult> RequestStatusChangeAsync(UpdateRequestStatusCommandRequest request)
         {
             UpdateRequestCommandStatusResponse response = await _mediator.Send(request);
+            return Ok(response);
+        }
+        [HttpGet("request-status-count")]
+        public async Task<IActionResult> RequestStatusAsync([FromQuery] RequestStatusQueryRequest request)
+        {
+            RequestStatusQueryResponse response = await _mediator.Send(request);
             return Ok(response);
         }
     }

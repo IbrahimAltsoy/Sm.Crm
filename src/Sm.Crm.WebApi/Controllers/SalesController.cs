@@ -6,6 +6,7 @@ using Sm.Crm.Application.Features.Commands.Sales.DeleteSale;
 using Sm.Crm.Application.Features.Commands.Sales.UpdateSales;
 using Sm.Crm.Application.Features.Queries.Sales.GetAll;
 using Sm.Crm.Application.Features.Queries.Sales.GetById;
+using Sm.Crm.Application.Features.Queries.Users.SalesPrice;
 
 namespace Sm.Crm.WebApi.Controllers
 {
@@ -48,6 +49,12 @@ namespace Sm.Crm.WebApi.Controllers
         public async Task<IActionResult> Delete([FromRoute]DeleteSaleCommandRequest request)
         {
             DeleteSaleCommandResponse response = await _mediator.Send(request);
+            return Ok(response);
+        }
+        [HttpGet("sale-price")]
+        public async Task<IActionResult> SalePriceAsync([FromQuery] SalesPriceQueryRequest request)
+        {
+            SalesPriceQueryResponse response = await _mediator.Send(request);
             return Ok(response);
         }
     }

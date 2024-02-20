@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Sm.Crm.Application.Features.Commands.Employies.CreateEmployee;
 using Sm.Crm.Application.Features.Commands.Employies.DeleteEmployee;
 using Sm.Crm.Application.Features.Commands.Employies.UpdateEmployee;
+using Sm.Crm.Application.Features.Queries.Employee.EmployeeDepartmentCountGetAll;
 using Sm.Crm.Application.Features.Queries.Employee.GetAllEmployeies;
 using Sm.Crm.Application.Features.Queries.Employee.GetById;
 using Sm.Crm.Application.Repositories;
@@ -53,6 +54,12 @@ namespace Sm.Crm.WebApi.Controllers
         {
             DeleteEmployeeCommandResponse response = await _mediator.Send(request);
             return Ok(request);
+        }
+        [HttpGet("employee-department-count")]
+        public async Task<IActionResult> EmployeeDepartmentCountAsync([FromQuery] EmployeeDepartmentCountQueryRequest request)
+        {
+            EmployeeDepartmentCountQueryResponse response = await _mediator.Send(request);
+            return Ok(response);
         }
     }
 }
