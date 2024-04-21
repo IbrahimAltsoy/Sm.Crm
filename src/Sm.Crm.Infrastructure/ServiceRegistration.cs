@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Sm.Crm.Application.Common.Interfaces;
 using Sm.Crm.Application.DTOs.Customers;
+using Sm.Crm.Application.Hubs;
 using Sm.Crm.Application.Repositories;
 using Sm.Crm.Application.Repositories.Customers;
 using Sm.Crm.Application.Repositories.Requests;
@@ -19,6 +20,7 @@ using Sm.Crm.Application.Tokens;
 using Sm.Crm.Application.Validator.Customer;
 using Sm.Crm.Domain;
 using Sm.Crm.Domain.Entities;
+using Sm.Crm.Infrastructure.Hubs.HubServices;
 using Sm.Crm.Infrastructure.Persistence;
 using Sm.Crm.Infrastructure.Persistence.Mapping;
 using Sm.Crm.Infrastructure.Persistence.Services.Authencation;
@@ -76,6 +78,10 @@ namespace Sm.Crm.Infrastructure
             services.AddScoped<IInternalAuthencation, AuthService>();
             services.AddScoped<IExternalAuthencation, AuthService>();
             services.AddScoped<IEmailService, EmailService>();
+
+            services.AddTransient<ILoginHubService, LoginServicesHub>();
+            services.AddSignalR();
+
             //services.AddScoped<IValidator<CreateCustomerDto>, CreateCustomerValidator>();
 
             return services;

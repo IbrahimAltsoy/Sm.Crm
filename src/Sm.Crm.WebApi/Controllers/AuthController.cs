@@ -9,6 +9,7 @@ using Sm.Crm.Application.Features.Commands.Users.PasswordReset;
 using Sm.Crm.Application.Features.Commands.Users.UpdatePassword;
 using Sm.Crm.Application.Features.Commands.Users.UserLogin;
 using Sm.Crm.Application.Features.Commands.Users.VerifyResetToken;
+using Sm.Crm.Application.Hubs;
 
 namespace Sm.Crm.WebApi.Controllers
 {
@@ -17,15 +18,22 @@ namespace Sm.Crm.WebApi.Controllers
     public class AuthController : ControllerBase
     {
         readonly IMediator _mediator;
+        readonly ILoginHubService _loginHubService;
 
-        public AuthController(IMediator mediator)
+        public AuthController(IMediator mediator, ILoginHubService loginHubService)
         {
             _mediator = mediator;
+            _loginHubService = loginHubService;
         }
         [HttpPost("[action]")]
         public async Task<IActionResult> Login(UserLoginCommandRequest request)
         {
-            UserLoginCommandResponse response = await _mediator.Send(request);            
+            UserLoginCommandResponse response = await _mediator.Send(request);
+            if (response != null)
+            {
+                await _loginHubService.UserLoginSendMessageAsync(request.UsernameOrEmail, "Giriş işlemleri", response.Message);
+                int a = 5;
+            }
             return Ok(response);
         }
         [HttpPost("google-login")]
